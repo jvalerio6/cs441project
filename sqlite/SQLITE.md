@@ -59,7 +59,7 @@ sqlite> .output stdout
 ```
 
 
-Select all task relates to 'will' from two tables using 'where'
+Select all task relates to certain user from two tables using 'where'
 
 ```
 sqlite> .mode column
