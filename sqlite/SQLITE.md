@@ -7,6 +7,7 @@ For visual interface, I use sqlite studio: http://sqlitestudio.pl/?act=download
 
 ### SQLite shell 
 [Field type reference](https://www.sqlite.org/datatype3.html)
+
 In terminal: >sqlite3
 
 Create db
