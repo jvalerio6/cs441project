@@ -21,8 +21,11 @@ public class Task {
 	private String task_name = null;
 	// define the project start date and end date
 	private Date start_date = null, end_date = null ;
+	// define the status of the task
+	private String status = null;
 	//define the Project priority
 	Project.Utile.Importance importance = Project.Utile.Importance.NOTINDICATED;
+
 
 	// Constructor with no arguments
 	public Task() { }
@@ -41,6 +44,8 @@ public class Task {
 	    this.start_date = st_date;
 	    // assigns project end date
 	    this.end_date = end_date;
+
+	    this.status = "Started";
     }
 
      // Constructor with three arguments, project name start date and end date
@@ -53,6 +58,8 @@ public class Task {
 	    this.end_date = end_date;
 	    // assigns the importance of the project
 	    this.importance = import_ance;
+
+	    this.status = "Started";
     }
 
     // accessors methods for all objects attributes
@@ -72,6 +79,12 @@ public class Task {
     // an object of type Date representing the curent project end date
     public Date getTskEndDate() {
     	return end_date;
+    }
+
+    // method getTskStatus returns a String representation of the status
+    // of the task;
+    public String getTskStatus() {
+    	return status;
     }
 
     // method getPrjctImportance takes no arguments and returns
@@ -97,6 +110,12 @@ public class Task {
     // changes the current end date to the argument and returns no argument
     public void setTskEndDate(Date date) {
     	this.end_date = date;
+    }
+
+    // method setTskStatus changes the value of the status variable and returns
+    // no argument
+    public void setTskStatus(String status) {
+    	this.status = status;
     }
 
     // method getPrjctImportance takes no arguments and returns

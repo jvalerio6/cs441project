@@ -47,7 +47,7 @@ public class Project {
     }
 
     // Constructor with three arguments, project name start date and end date
-    public Project(String name, Date st_date, Date end_date){
+    public Project(String name, Date st_date, Date end_date) {
 	    // assigns project name
 	    this.project_name = name;
 	    // assigns project start date
@@ -55,8 +55,9 @@ public class Project {
 	    // assigns project end date
 	    this.end_date = end_date;
     }
-     // Constructor with three arguments, project name start date and end date
-    public Project(String name, Date st_date, Date end_date,Utile.Importance import_ance){
+
+     // Constructor with three arguments, project name start date, end date, and importance
+    public Project(String name, Date st_date, Date end_date,Utile.Importance import_ance) {
 	    // assigns project name
 	    this.project_name = name;
 	    // assigns project start date
@@ -70,13 +71,13 @@ public class Project {
     // accessors methods for all objects attributes
     // method getPrjctName takes no arguments and returns
     // a string representing the current object name
-    public String getPrjctName(){
+    public String getPrjctName() {
     	return project_name;
     }
 
     // method getStrtDate takes no arguments and returns
     // an object of type Date representing the curent project start date
-    public Date getStrtDate(){
+    public Date getStrtDate() {
     	return start_date;
     }
 
