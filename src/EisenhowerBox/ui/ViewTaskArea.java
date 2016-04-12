@@ -167,10 +167,6 @@ public class ViewTaskArea extends JPanel{
       System.out.println("Exception when constructing document: " + e);
       System.exit(1);
     }
-
-    f.getContentPane().add(new JScrollPane(pane));
-    f.setSize(400, 300);
-    f.setVisible(true);
   }
 
   private static final String sampleTask = "Task 1 start date End Date priority .........." +
