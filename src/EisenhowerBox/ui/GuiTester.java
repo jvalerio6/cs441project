@@ -1,7 +1,7 @@
 /**
  * 
  */
-package EisenhowerBox;
+package EisenhowerBox.ui;
 
 import javax.swing.SwingUtilities;
 import java.io.FileWriter;
@@ -11,8 +11,14 @@ import java.io.FileWriter;
  *
  */
 public class GuiTester {
+	
 	private Gui gui;
+	
 	public GuiTester(){
+		gui = null;
+	}
+	
+	public void runTester(){
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				gui = Gui.getInstance();

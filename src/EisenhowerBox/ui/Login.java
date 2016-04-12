@@ -1,4 +1,4 @@
-package EisenhowerBox;
+package EisenhowerBox.ui;
 
 
 import java.awt.*;

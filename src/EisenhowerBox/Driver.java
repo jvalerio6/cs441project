@@ -1,10 +1,7 @@
 package EisenhowerBox;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Scanner;
 
-import javax.swing.SwingUtilities;
+import java.io.IOException;
+import EisenhowerBox.ui.GuiTester;
 
 
 public class Driver {
@@ -13,10 +10,7 @@ public class Driver {
 	{
 				
 		GuiTester gTest = new GuiTester();
-		
-		
-		
-		
+		gTest.runTester();
 		
 	}
 

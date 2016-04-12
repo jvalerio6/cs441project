@@ -1,4 +1,4 @@
-package EisenhowerBox;
+package EisenhowerBox.ui;
 
 
 import java.awt.*;
@@ -10,6 +10,11 @@ import javax.swing.*;
 
 
 public class Gui extends JFrame {	 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private static Gui instance = null;
 	
 	final Random rand = new Random();
@@ -27,7 +32,7 @@ public class Gui extends JFrame {
 
 	private Gui()
 	{
-		//passwordFrame();
+		passwordFrame();
 		createGUI();
 	}
 	
