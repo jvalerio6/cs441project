@@ -17,15 +17,20 @@ import javax.swing.text.*;
 import javax.swing.event.*;
 import javax.swing.GroupLayout.*;
 
-public class Search extends JLabel implements DocumentListener {
+public class Search extends JPanel implements DocumentListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 50L;
 	final static int SEARCH_FIELD_WIDTH = 20; // Number of collumns in the search field
-	private JTextField jtxtfQuery;    
-    private JLabel jlblSearch;
+	private JTextField jtxtfQuery = null;    
+    private JButton jbtnSearch =null;
     
 	/**
 	 * Default Constructor to initialize the new search component and 
 	 */
     public Search() {
+    	super();
         initComponents();
 
     }
@@ -36,9 +41,13 @@ public class Search extends JLabel implements DocumentListener {
  
     private void initComponents() {
         jtxtfQuery = new JTextField(" Search ", SEARCH_FIELD_WIDTH );
+        jbtnSearch = new JButton("Search");
         
-        jlblSearch = new JLabel();
-        jlblSearch.add(jtxtfQuery);
+        
+        this.setBackground(Color.lightGray);
+        this.setLayout(new BorderLayout());
+        this.add(jtxtfQuery);
+        this.add(jbtnSearch);
     }
  
     public void searchTasks() {

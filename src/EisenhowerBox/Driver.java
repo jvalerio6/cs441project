@@ -1,6 +1,9 @@
 package EisenhowerBox;
 
+import java.awt.GraphicsEnvironment;
 import java.io.IOException;
+import java.util.Scanner;
+
 import EisenhowerBox.ui.GuiTester;
 
 
@@ -10,8 +13,17 @@ public class Driver {
 	{
 				
 		GuiTester gTest = new GuiTester();
-		gTest.runTester();
-		
+		int x;
+		Scanner in = new Scanner(System.in);
+		x = in.nextInt();
+		/*
+		 * GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		 
+		String[] fnt = ge.getAvailableFontFamilyNames();
+
+		for (String f : fnt){
+		            System.out.println(f);
+		}*/
 	}
 
 }
