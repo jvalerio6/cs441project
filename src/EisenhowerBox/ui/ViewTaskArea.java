@@ -87,7 +87,7 @@ public class ViewTaskArea extends JPanel{
 	private void initComponents(){
 		
 		this.setBackground(Color.black);
-		this.setSize(panel_dimension);
+		this.setPreferredSize(panel_dimension);
 		this.setLayout(new GridLayout(2,0));
 		//this.setLayout(new GridBagLayout());
 		
@@ -99,7 +99,7 @@ public class ViewTaskArea extends JPanel{
         JPanel wrapPanel = new JPanel(new BorderLayout());
         wrapPanel.add(jtxpn1);
         
-        jscpn1.setSize(new Dimension(
+        jscpn1.setPreferredSize(new Dimension(
         		panel_dimension.width -10,
         		panel_dimension.height -10));
         jscpn1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -124,7 +124,7 @@ public class ViewTaskArea extends JPanel{
 	private void init(){
 		
 		this.setBackground(Color.black);
-		this.setSize(panel_dimension);
+		this.setPreferredSize(panel_dimension);
 		this.setLayout(new GridLayout(2,0));
 		
 		for (int i=0; i<NUMBER_OF_TASK_PRIORITY_BOXES; i++){
@@ -191,7 +191,7 @@ public class ViewTaskArea extends JPanel{
 	    
 	    wrapPanel.add(textPane);
 	    
-	    scrollPane.setSize(new Dimension(
+	    scrollPane.setPreferredSize(new Dimension(
         		panel_dimension.width -10,
         		panel_dimension.height -10));
 	    scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);

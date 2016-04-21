@@ -48,64 +48,61 @@ public class Gui extends JFrame {
     
     
     void createGUI(){
+    	final JPanel panel = new JPanel(new GridBagLayout());
 		final JPanel jpnlView = viewPanel();
 		final JPanel jpnlTasks =new ViewTaskArea();
-		//final JPanel jpnlMenu = menuBar();
-		//final JPanel jpnlPanel = new JPanel(new GridBagLayout());
+		final JPanel jpnlMenu = menuBar();
 		
 		GridBagConstraints c = new GridBagConstraints();
-		/*
-		c.ipady = 0;       						//make this component tall
-		c.weighty = 1.0;   						//request any extra vertical space
-		c.anchor = GridBagConstraints.PAGE_END; //bottom of space
-		c.insets = new Insets(10,0,0,0);  		//top padding
-		c.gridx = 1;      						 //aligned with button 2
-		c.gridwidth = 2;  						 //2 columns wide
-		c.gridy = 2;      						 //third row
 		
-		c.ipady = 0;       						//make this component tall
-		c.weighty = 1.0;   						//request any extra vertical space
-		c.anchor = GridBagConstraints.PAGE_END; //bottom of space
-		c.insets = new Insets(10,0,0,0);  		//top padding
-		c.gridx = 1;      						 //aligned with button 2
-		c.gridwidth = 2;  						 //2 columns wide
-		c.gridy = 2;  
-		
-		c.weightx = 0.5;
-		c.weighty = 0.5;
-		c.ipady = 40;
-		c.anchor = GridBagConstraints.PAGE_START;
-		c.gridheight = 3;
+			//Adds the menue to the top so it takes up the entire width
+		c.weightx = 1.0;   						//request any extra Horizontal space
+		c.anchor = GridBagConstraints.PAGE_START; 
+		c.insets = new Insets(10,5,5,5);  		
+		c.gridx = 0;      						 
+		c.fill =  GridBagConstraints.HORIZONTAL;  						
+		c.gridy = 0;
 		c.gridwidth = 2;
-		c.insets = new Insets(10,0,0,0);
-		//c.fill
+		panel.add(jpnlMenu,c);
 		
 		
 		
+			// Adds the View Panel to the side and sizes it
+		c.weighty = 0.5;
+		c.weightx = 0.0;
+		c.anchor = GridBagConstraints.WEST; 
+		c.insets = new Insets(0,5,5,5);  		
+		c.gridx = 0;      						 
+		c.gridwidth = 1;  						
+		c.gridy = 1;
+		c.fill = GridBagConstraints.VERTICAL;
+		panel.add(jpnlView, c);
 		
 		
-		
-		
-	   
-	    frame.setLayout(new GridLayout(1,5,10,10));
-	    frame.add(jpnlView);
-	    frame.add(jpnlTasks);
-        frame.pack();
-        frame.setVisible(true);
-        
-        */
+			// Adds the Task Panel to the right
+		c.weightx = 1.0;
+		c.weighty = 0.5;
+		c.gridx = 1;      						 
+		c.gridy = 1;
+		c.anchor = GridBagConstraints.EAST;
+		c.insets = new Insets(0,5,5,5);
+		c.fill = GridBagConstraints.BOTH;
+		panel.add(jpnlTasks, c);
+
+		panel.setVisible(true);
+		if (coloredPanels) panel.setBackground(randColor());
+
         SwingUtilities.invokeLater(new Runnable() {
     		public void run(){
     			JFrame frame = new JFrame("Project Managment");
         	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         	    JFrame.setDefaultLookAndFeelDecorated(true);	
-        		frame.setLayout(new GridLayout(1,5,10,10));
+        		frame.setLayout(new BorderLayout());
         		if (coloredPanels) frame.setBackground(randColor());	
-        	    frame.add(jpnlView);
-        	    frame.add(jpnlTasks);
+        	    frame.add(panel);
                 frame.pack();
                 frame.setVisible(true);
-                frame.setSize(new Dimension(800, 400));
+                frame.setPreferredSize(panel.getPreferredSize());
     		}
     	});
 	}
@@ -146,12 +143,30 @@ public class Gui extends JFrame {
 	private JPanel viewPanel() {
 		int hgap = 10;
 		int vgap = 10;
-		final JButton jbtnManager = new JButton(" Project Maneger ");
-	    final JButton jbtnUser = new JButton(" Personal User ");
-	    final JButton jbtnCommunity = new JButton("Community User");
-	    final JButton jbtnObservation = new JButton("Observation");
+		final JButton jbtnManager = new JButton();
+		final JLabel jlbl1 = new JLabel("Project");
+		final JLabel jlbl2 = new JLabel("Manager");
+	    final JButton jbtnUser = new JButton();
+	    final JLabel jlbl3 = new JLabel("Personal");
+		final JLabel jlbl4 = new JLabel("  User");
+	    final JButton jbtnCommunity = new JButton();
+	    final JLabel jlbl5 = new JLabel("Comunity");
+		final JLabel jlbl6 = new JLabel("  User");
+	    final JButton jbtnObservation = new JButton("Observer");
 	    
-	    Dimension d = new Dimension(30,50);
+	    jbtnManager.setLayout(new BorderLayout());
+	    jbtnManager.add(BorderLayout.NORTH,jlbl1);
+	    jbtnManager.add(BorderLayout.CENTER,jlbl2);
+	    
+	    jbtnUser.setLayout(new BorderLayout());
+	    jbtnUser.add(BorderLayout.NORTH,jlbl3);
+	    jbtnUser.add(BorderLayout.CENTER,jlbl4);
+	    
+	    jbtnCommunity.setLayout(new BorderLayout());
+	    jbtnCommunity.add(BorderLayout.NORTH,jlbl5);
+	    jbtnCommunity.add(BorderLayout.CENTER,jlbl6);
+	    
+	    Dimension d = new Dimension(135,50);
 	    jbtnManager.setPreferredSize(d);
 	    jbtnUser.setPreferredSize(d);
 	    jbtnCommunity.setPreferredSize(d);
@@ -173,32 +188,39 @@ public class Gui extends JFrame {
 	}
 	
 	private JPanel menuBar() {
-		int hgap = 10;
-		int vgap = 10;
+		
 		final JButton jbtnNewTask = new JButton(" New Task ");
 	    final JButton jbtnLogin = new JButton(" logout ");
+	    final JPanel panel = new JPanel(new GridBagLayout());
+	    final JPanel searchPanel = new Search();
+
+	    jbtnNewTask.setPreferredSize(new Dimension(100,40));
+	    jbtnLogin.setPreferredSize(new Dimension(80, 40));
 	    
+
 	    
-	    Dimension d = new Dimension(30,50);
-	    //jbtnManager.setPreferredSize(d);
-	    //jbtnUser.setPreferredSize(d);
-	   // jbtnCommunity.setPreferredSize(d);
-	    //jbtnObservation.setPreferredSize(d);
+	    GridBagConstraints c = new GridBagConstraints();
+	    c.gridx = 0;
+	    c.gridy = 0;
+	    c.ipadx = 100;
+	    c.anchor = GridBagConstraints.WEST;
+	    panel.add(jbtnLogin, c);
 	    
+	    c.gridx = 1;
+	    c.ipadx = 25;
+	    c.anchor = GridBagConstraints.EAST;
+	    panel.add(jbtnNewTask, c);
 	    
+	    c.gridx = 2;
+	    c.ipadx = 25;
+	    c.anchor = GridBagConstraints.EAST;
+	    panel.add(searchPanel, c);
 	    
-	    
-	    
-	    JPanel panel = null;
 		if (coloredPanels){
 			panel.setBackground(randColor());	
 		}
 	    return panel;
-	}
-	
-	
-	
-	
+	}	
 	
 	
 	/**
