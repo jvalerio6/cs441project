@@ -20,7 +20,7 @@ public class TeamMember extends User {
 	}
 
 	boolean hasCompletedTask(Task task) {
-		return ( (this.task_list.indexOf(task) >= 0) && (task.getTskStatus() == "Completed") ) ? true : false;
+		return ( (this.task_list.indexOf(task) >= 0) && (task.getTaskStatus() == "Completed") ) ? true : false;
 	}
 
 }
