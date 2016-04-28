@@ -13,7 +13,6 @@ public class Gui extends JFrame {
 	/**
 	 * 
 	 */
-	String change = null;
 	private static final long serialVersionUID = 1L;
 
 	private static Gui instance = null;
