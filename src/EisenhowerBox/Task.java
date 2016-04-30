@@ -15,7 +15,8 @@ package EisenhowerBox;
  * @author Samir Asfirane, Nelson DeBate
  */
 
-import EisenhowerBox.Date;
+import java.util.Date;
+// import EisenhowerBox.Date;
 
 
 public class Task {

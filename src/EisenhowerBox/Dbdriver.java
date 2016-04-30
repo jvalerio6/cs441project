@@ -1,24 +1,24 @@
-// package EisenhowerBox;
+package EisenhowerBox;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
 
 // build with:
-// javac Driver.java
-// java -classpath ".:sqlite-jdbc-3.8.11.2.jar" Driver
+// javac Dbdriver.java
+// java -classpath ".:sqlite-jdbc-3.8.11.2.jar" Dbdriver
 
-public class Driver {
+public class Dbdriver {
     public static void main(String[] args) {
         System.out.println("Staring");
         DbManager dbm = new DbManager();
 
         // create user (username, pw)
-        // dbm.createUser("will", "123");
-
-        // dbm.createUser("eric", "456");
-        // dbm.createUser("nelson", "999");
-        // dbm.createUser("jack", "111");
+        dbm.createUser("will", "123");
+        dbm.createUser("ricky", "1231231");
+        dbm.createUser("erik", "456");
+        dbm.createUser("nelson", "999");
+        dbm.createUser("jack", "111");
 
         // create task (user_id, task_title, task_content)
 
@@ -38,17 +38,17 @@ public class Driver {
 
 
         // create arraylist of task object
-        ArrayList<Task> task_list = new ArrayList<Task>();
+        // ArrayList<Task> task_list = new ArrayList<Task>();
 
         // call the funciton with user id
-        task_list = dbm.getTask(1);
+        // task_list = dbm.getTask(1);
 
         // print out the task
-        System.out.printf("\n=== Task id: %d === \n", task_list.get(0).id);
-        System.out.println(task_list.get(0).date_created);
-        System.out.println(task_list.get(0).task_title);
-        System.out.println(task_list.get(0).task_content);
-        System.out.println();
+        // System.out.printf("\n=== Task id: %d === \n", task_list.get(0).id);
+        // System.out.println(task_list.get(0).date_created);
+        // System.out.println(task_list.get(0).task_title);
+        // System.out.println(task_list.get(0).task_content);
+        // System.out.println();
 
     }
 }

@@ -82,7 +82,7 @@ public class DbManager {
         // initialize sql query
         System.out.printf("Create username: %s pw: %s\n", username, password);
         String sql_query = String.format("INSERT into user "+
-            "(username, password) values ('%s', '%s')", 
+            "(MemName, MmePws) values ('%s', '%s')", 
             username, password); 
 
         // execute sql_query
@@ -188,10 +188,11 @@ public class DbManager {
                 String task_content = result.getString("task_content");
 
                 // create new task using the string
-                Task temp_task = new Task(id, date_created, date_last_mod, task_title, task_content);
+                // Task temp_task = new Task(id, date_created, date_last_mod, task_title, task_content);             
+                // Task temp_task = new Task(date_created, date_last_mod, task_title, task_content);
 
                 // append the task object to the task arraylist
-                task_list.add(temp_task);
+                // task_list.add(temp_task);
             }
         } catch (Exception e) {
             System.out.println(e);
