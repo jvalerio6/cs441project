@@ -8,6 +8,7 @@ package EisenhowerBox;
  * Samir Asfirane, Yu (Will) Tian
  */
 
+
 /*
  * Class Project defines the object project
  * it's attributes and methods
