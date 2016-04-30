@@ -25,7 +25,7 @@ public class DbManager {
         String db_target;
 
         // initialize name and target of database
-        db_name = "test.db";
+        db_name = "EisenHower.db";
         db_target = ("jdbc:sqlite:").concat(db_name);
         // System.out.println(db_target);
 
@@ -63,6 +63,17 @@ public class DbManager {
         return result;
     }
 
+    // fake grid location generator 
+    public int randInt(){
+        int min = 1;
+        int max = 4;
+        Random rand = new Random();
+        int randomNum = rand.nextInt((max - min) + 1) + min;
+        return randomNum;
+    }
+
+
+    // ============== DB ===================
     // Create users
     // Pass in username and password
     public void createUser(String username, String password) {
@@ -78,14 +89,6 @@ public class DbManager {
         localExecuteSqlQuery(func_name, sql_query);
     }
 
-    // fake grid location generator 
-    public int randInt(){
-        int min = 1;
-        int max = 4;
-        Random rand = new Random();
-        int randomNum = rand.nextInt((max - min) + 1) + min;
-        return randomNum;
-    }
 
     // fucntion to create task
     public void createTask(int user_id, String task_title, String task_content) {
