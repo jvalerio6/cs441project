@@ -184,8 +184,8 @@ public class Task {
      //takes no arguments and returns a type Importance representing
      //the current object importance
      */
-    public Project.Utile.Importance getTskImportance(){
-        return importance;
+    public String getTskImportance(){
+        return this.importance.toString();
     }
 
 
@@ -193,8 +193,8 @@ public class Task {
      //method getTskPriority takes no argument and return an argument of type
      //type Priority
      */
-    public Project.Utile.Priority getTskPriority(){
-        return this.prio;
+    public String getTskPriority() {
+        return this.prio.toString();
     }
 
 
@@ -287,8 +287,8 @@ public class Task {
      //takes no arguments and returns a type Importance
      //representing the current object importance
      */
-    public void setTskImportance(Project.Utile.Importance import_tant){
-        this.importance = import_tant;
+    public void setTskImportance(String import_tant){
+        this.importance = Project.Utile.Importance.valueOf(import_tant);
     }
 
 
@@ -296,8 +296,8 @@ public class Task {
      // method setTskPriority takes an argument of type enum Priority
      // and sets the current task priority to its argument
      */
-    public void setTskPriority(Project.Utile.Priority prio){
-        this.prio = prio;
+    public void setTskPriority(String prio) {
+        this.prio = Project.Utile.Priority.valueOf(prio);
     }
 
 
