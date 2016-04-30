@@ -50,7 +50,7 @@ public class GuiTester extends JFrame {
 		this.setVisible(true);
 	}
 		
-	
+	/**
 	Task t1 = new Task("get the pod 1", new Date(), new Date());
 	Task t2 = new Task("get the next pod 2 ", new Date(), new Date());
 	Task t3 = new Task("get the next pod 3", new Date(), new Date());
@@ -62,6 +62,6 @@ public class GuiTester extends JFrame {
 	Task t9 = new Task("get the next pod 9", new Date(), new Date());
 	
 	TeamMember user = new TeamMember("TestUser","password", 100 );
-
+*/
 
 }
