@@ -33,6 +33,7 @@ import EisenhowerBox.Project.Utile;
 import EisenhowerBox.Project;
 import EisenhowerBox.Task;
 import EisenhowerBox.TeamMember;
+import EisenhowerBox.User;
 
 /**
  * @author erikkalan
@@ -57,6 +58,8 @@ public class ViewTaskArea extends JPanel{
 	protected final JScrollPane jscpn2 = new JScrollPane();
 	protected final JScrollPane jscpn3 = new JScrollPane();
 	protected final JScrollPane jscpn4 = new JScrollPane();
+	//DbManager db = new DbManager();
+	User user = null; 
 	
 	 /**
 		 * Default text inside all Panes
@@ -252,6 +255,37 @@ public class ViewTaskArea extends JPanel{
 	      }
 	    
 	}
+	
+	protected List<Task> priorityListCreator(List<Task> userList, 
+			EisenhowerBox.Project.Utile.Importance importance, 
+			EisenhowerBox.Project.Utile.Priority priority){
+		
+		List<Task> p1 = null;
+		
+		if (userList == null) return p1;
+	
+		for (Task task: userList){
+			if (priority == task.prio && importance == task.importance){
+				p1.add(task);
+			}
+		}
+		return p1;
+	}
+	
+	protected void writeTasksToPane(User user){
+		//Listdb.getTaskList(user); // List <Tasks> from the database manager
+		List<Task> tList;
+		
+		
+	}
+	
+	public void updateTasksInPane(){
+		user =  new TeamMember("mario", "Super", "MarBros");
+		
+		
+	}
+	
+	
 	
 	
 	
