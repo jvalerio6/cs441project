@@ -25,7 +25,7 @@ public class DbManager {
         String db_target;
 
         // initialize name and target of database
-        db_name = "test.db";
+        db_name = "Eisenhower.db";
         db_target = ("jdbc:sqlite:").concat(db_name);
         // System.out.println(db_target);
 
@@ -63,21 +63,6 @@ public class DbManager {
         return result;
     }
 
-    // Create users
-    // Pass in username and password
-    public void createUser(String username, String password) {
-        String func_name = "createUser";
-
-        // initialize sql query
-        System.out.printf("Create username: %s pw: %s\n", username, password);
-        String sql_query = String.format("INSERT into user "+
-            "(username, password) values ('%s', '%s')", 
-            username, password); 
-
-        // execute sql_query
-        localExecuteSqlQuery(func_name, sql_query);
-    }
-
     // fake grid location generator 
     public int randInt(){
         int min = 1;
@@ -87,8 +72,28 @@ public class DbManager {
         return randomNum;
     }
 
-    // fucntion to create task
-    public void createTask(int user_id, String task_title, String task_content) {
+
+    // ============== DB ===================
+    // Create users on sql
+    public void createUser(String username, String password) {
+        String func_name = "createUser";
+
+        // initialize sql query
+        // pass username and pw
+        System.out.printf("Create username: %s pw: %s\n", username, password);
+        String sql_query = String.format("INSERT into TeamMember (MemName, MemPws) values ('%s', '%s')", 
+            username, password); 
+
+        // testing sql_query
+        System.out.println(sql_query);
+
+        // execute sql_query
+        localExecuteSqlQuery(func_name, sql_query);
+    }
+
+
+    // create task on sql
+    public void createTask(int member_id, String task_title, String task_content) {
         String func_name = "createTask";
         String current_datetime;
 
@@ -105,11 +110,14 @@ public class DbManager {
         // right now it's a random number fro2m 1 to 4
         int grid_location = randInt();
 
-        System.out.printf("Create task for user %d\n", user_id);
-        String sql_query = String.format("INSERT into task " +
-                "(user_id, task_title, task_content, date_created, date_last_mod, grid_location) values " +
-                "('%s', '%s', '%s', '%s', '%s', '%s')", 
-                user_id, task_title, task_content, current_datetime, current_datetime, grid_location); 
+        System.out.printf("Create task for user %d\n", member_id);
+        String sql_query = String.format("INSERT into Task " +
+                "(TeamMember_id, task_title, task_content, start_date, due_date) values " +
+                "('%s', '%s', '%s', '%s', '%s')", 
+                member_id, task_title, task_content, current_datetime, current_datetime); 
+
+        // testing sql_query
+        System.out.println(sql_query);
 
         // execute sql_query
         localExecuteSqlQuery(func_name, sql_query);
@@ -126,13 +134,13 @@ public class DbManager {
     }
 
     // pass in user id, list out all tasks
-    public List getTaskArray(int user_id) {
+    public List getTaskArray(int member_id) {
         String func_name = "getTask";
         List<String[]> table = new ArrayList<>();
 
         String sql_query = String.format("SELECT * "+
-            "from task WHERE user_id = '%s'", 
-            user_id); 
+            "from task WHERE member_id = '%s'", 
+            member_id); 
 
         // execute sql query
         ResultSet result = localExecuteSqlQuery(func_name, sql_query);
@@ -157,13 +165,13 @@ public class DbManager {
     }
 
     // Function to get arraylist of task object
-    public ArrayList<Task> getTask(int user_id) {
+    public ArrayList<Task> getTask(int TeamMember_id) {
         String func_name = "getTask";
 
-        // sql query to select all task assgiend to 'user_id'
+        // sql query to select all task assgiend to 'member_id'
         String sql_query = String.format("SELECT * "+
-            "from task WHERE user_id = '%s'", 
-            user_id); 
+            "from task WHERE TeamMember_id = '%s'", 
+            TeamMember_id); 
 
         // execute sql query
         ResultSet result = localExecuteSqlQuery(func_name, sql_query);
@@ -179,13 +187,18 @@ public class DbManager {
             while( result.next()) {
                 // assign db result to string
                 int id = result.getInt("id");
-                String date_created = result.getString("date_created");
-                String date_last_mod = result.getString("date_last_mod");
+                String start_date = result.getString("start_date");
+                String due_date = result.getString("due_date");
                 String task_title = result.getString("task_title");
                 String task_content = result.getString("task_content");
 
+                // convert the string date from sql to Java.util.date
+                Date date_created_temp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS").parse(start_date);
+                Date due_date_temp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS").parse(due_date);
+
+
                 // create new task using the string
-                Task temp_task = new Task(id, date_created, date_last_mod, task_title, task_content);
+                Task temp_task = new Task(id, task_title, task_content, date_created_temp, due_date_temp);             
 
                 // append the task object to the task arraylist
                 task_list.add(temp_task);
