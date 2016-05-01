@@ -57,6 +57,18 @@ public class Task {
         this.taskStatus = "Started";
     }
 
+    /**
+     //Constructor with five arguments (new - will)
+     */
+    public Task(int taskId, String name, String taskDescription, Date st_date, Date endDate){
+        this.taskId = taskId;
+        this.taskName = name;           //assigns task name
+        this.taskDescription = taskDescription;
+        this.startDate = st_date;       //assigns task start date
+        this.endDate = endDate;         //assigns task end date
+        this.taskStatus = "Started";
+    }
+
 
     /**
      //Constructor with four arguments, project name, start date, end date, importance
