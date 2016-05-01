@@ -10,20 +10,23 @@ import java.sql.*;
 // javac Dbdriver.java
 // java -classpath ".:sqlite-jdbc-3.8.11.2.jar" Dbdriver
 
+
+// javac EisenhowerBox/Dbdriver.java EisenhowerBox/Task.java EisenhowerBox/Project.java EisenhowerBox/DbManager.java
+// java -classpath ".:sqlite-jdbc-3.8.11.2.jar" EisenhowerBox/Dbdriver
+
 public class Dbdriver {
     public static void main(String[] args) {
         System.out.println("Staring");
         DbManager dbm = new DbManager();
 
         // // create user (username, pw)
-        dbm.createUser("will", "123");
-        dbm.createUser("ricky", "1231231");
-        dbm.createUser("erik", "456");
-        dbm.createUser("nelson", "999");
-        dbm.createUser("jack", "111");
+        // dbm.createUser("will", "123");
+        // dbm.createUser("ricky", "1231231");
+        // dbm.createUser("erik", "456");
+        // dbm.createUser("nelson", "999");
+        // dbm.createUser("jack", "111");
 
         // create task (user_id, task_title, task_content)
-
         // dbm.createTask(1, "Buy toliet paper", "extra soft one");
         // dbm.createTask(1, "Prepare for midterm", "");
         // dbm.createTask(1, "Start reading network project material", "");
@@ -40,17 +43,18 @@ public class Dbdriver {
 
 
         // create arraylist of task object
-        // ArrayList<Task> task_list = new ArrayList<Task>();
+        ArrayList<Task> task_list = new ArrayList<Task>();
 
-        // call the funciton with user id
-        // task_list = dbm.getTask(1);
+        // call the funciton with user id, this
+        // this return a arraylist of task objects
+        task_list = dbm.getTask(1);
 
         // print out the task
-        // System.out.printf("\n=== Task id: %d === \n", task_list.get(0).id);
-        // System.out.println(task_list.get(0).date_created);
-        // System.out.println(task_list.get(0).task_title);
-        // System.out.println(task_list.get(0).task_content);
-        // System.out.println();
+        System.out.printf("\n=== Task id: %d === \n", task_list.get(0).getTaskId());
+        System.out.println(task_list.get(0).getTskStrtDate());
+        System.out.println(task_list.get(0).getTskName());
+        System.out.println(task_list.get(0).getTskDescription());
+        System.out.println();
 
     }
 }
