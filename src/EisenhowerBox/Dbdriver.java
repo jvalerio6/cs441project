@@ -3,6 +3,8 @@ package EisenhowerBox;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
+import java.sql.*; 
+
 
 // build with:
 // javac Dbdriver.java
@@ -13,7 +15,7 @@ public class Dbdriver {
         System.out.println("Staring");
         DbManager dbm = new DbManager();
 
-        // create user (username, pw)
+        // // create user (username, pw)
         dbm.createUser("will", "123");
         dbm.createUser("ricky", "1231231");
         dbm.createUser("erik", "456");
