@@ -117,4 +117,28 @@ public class Project {
     public void setPrjctImportance(Utile.Importance import_tant){
     	this.importance = import_tant;
     }
+
+    public static String[] getImportanceList() {
+    	String[] importanceList = new String[6];
+    	int i = 0;
+
+    	for (Project.Utile.Importance imp : Project.Utile.Importance.values()) {
+    		importanceList[i] = imp.toString();
+    		i++;
+    	}
+
+    	return importanceList;
+    }
+
+    public static String[] getPriorityList() {
+    	String[] priorityList = new String[2];
+    	int i = 0;
+
+    	for (Project.Utile.Priority prio : Project.Utile.Priority.values()) {
+    		priorityList[i] = prio.toString();
+    		i++;
+    	}
+
+    	return priorityList;
+    }
 }
