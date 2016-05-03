@@ -111,13 +111,12 @@ public class DbManager {
 
         } catch (Exception e) {
             System.out.println(e);
+
+            // if no user were found, return a empty user object with ID = 0 
+            TeamMember temp_user = new TeamMember("", "", 0); 
+            return temp_user;
         }
-
-        // return the arraylist
-        TeamMember temp_user = new TeamMember(MemName, MemPws, id); 
-        return temp_user;
     }
-
 
 
     // create task on sql
@@ -187,7 +186,7 @@ public class DbManager {
         return table;
     }
 
-    // Function to get arraylist of task object
+    // Get arraylist of task object using User_id
     public ArrayList<Task> getTask(int TeamMember_id) {
         String func_name = "getTask";
 
@@ -218,7 +217,6 @@ public class DbManager {
                 // convert the string date from sql to Java.util.date
                 Date date_created_temp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS").parse(start_date);
                 Date due_date_temp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS").parse(due_date);
-
 
                 // create new task using the string
                 Task temp_task = new Task(id, task_title, task_content, date_created_temp, due_date_temp);             
