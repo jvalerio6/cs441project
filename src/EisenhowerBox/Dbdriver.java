@@ -7,18 +7,17 @@ import java.sql.*;
 
 
 // build with:
-// javac Dbdriver.java
-// java -classpath ".:sqlite-jdbc-3.8.11.2.jar" Dbdriver
-
-
 // javac EisenhowerBox/Dbdriver.java EisenhowerBox/Task.java EisenhowerBox/Project.java EisenhowerBox/DbManager.java EisenhowerBox/TeamMember.java
+
+// then
 // java -classpath ".:sqlite-jdbc-3.8.11.2.jar" EisenhowerBox/Dbdriver
 
 public class Dbdriver {
     public static void main(String[] args) {
-        System.out.println("Staring");
+        // ==== Create a new DbManager Class, this handle all sql connections =====
         DbManager dbm = new DbManager();
 
+        // ================ User and Task creation ====================
         // // create user (username, pw)
         // dbm.createUser("will", "123");
         // dbm.createUser("ricky", "1231231");
@@ -42,11 +41,10 @@ public class Dbdriver {
         // dbm.createTask(1, "Watch the GSW game", "Last game of the season");
 
 
+        // =========== Get Task Testing ================
         // create arraylist of task object
+        // call the funciton with user id, return arraylist of task objects
         ArrayList<Task> task_list = new ArrayList<Task>();
-
-        // call the funciton with user id, this
-        // this return a arraylist of task objects
         task_list = dbm.getTask(1);
 
         // print out the task
@@ -56,9 +54,14 @@ public class Dbdriver {
         System.out.println(task_list.get(0).getTskDescription());
         System.out.println();
 
-        // get teamMmber testing............
-        TeamMember temp = dbm.getUser("will");
-        System.out.println(temp.name);
+
+        // =========== Get User testing ===========
+        // if the user doesn't exit, return a empty user object with ID = 0
+        TeamMember temp = dbm.getUser("lala");
+        System.out.println(temp.ID);
     
+        // if it exist, return user object
+        temp = dbm.getUser("will");
+        System.out.printf(temp.password);
     }
 }
