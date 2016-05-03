@@ -67,16 +67,6 @@ public class DbManager {
         return result;
     }
 
-    // fake grid location generator 
-    public int randInt(){
-        int min = 1;
-        int max = 4;
-        Random rand = new Random();
-        int randomNum = rand.nextInt((max - min) + 1) + min;
-        return randomNum;
-    }
-
-
     // ============== DB ===================
     // Create users on sql
     public void createUser(String username, String password) {
@@ -112,10 +102,6 @@ public class DbManager {
 
         // traverse and wrap the result into task object
         try {
-            // check number of columns
-            // int nCol = result.getMetaData().getColumnCount();
-            // System.out.printf("Result has: %d columns. \n", nCol);
-
             id = result.getInt("id");
             MemName = result.getString("MemName");
             MemPws = result.getString("MemPws");
@@ -146,11 +132,6 @@ public class DbManager {
         //create a data formatter, and use it convert it to a string. 
         SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss.SSS");
         current_datetime = ft.format(dNow);
-
-        // grid location
-        // Eric says he need this value to do the gui
-        // right now it's a random number fro2m 1 to 4
-        int grid_location = randInt();
 
         System.out.printf("Create task for user %d\n", member_id);
         String sql_query = String.format("INSERT into Task " +
