@@ -11,7 +11,7 @@ import java.sql.*;
 // java -classpath ".:sqlite-jdbc-3.8.11.2.jar" Dbdriver
 
 
-// javac EisenhowerBox/Dbdriver.java EisenhowerBox/Task.java EisenhowerBox/Project.java EisenhowerBox/DbManager.java
+// javac EisenhowerBox/Dbdriver.java EisenhowerBox/Task.java EisenhowerBox/Project.java EisenhowerBox/DbManager.java EisenhowerBox/TeamMember.java
 // java -classpath ".:sqlite-jdbc-3.8.11.2.jar" EisenhowerBox/Dbdriver
 
 public class Dbdriver {
@@ -56,5 +56,9 @@ public class Dbdriver {
         System.out.println(task_list.get(0).getTskDescription());
         System.out.println();
 
+        // get teamMmber testing............
+        TeamMember temp = dbm.getUser("will");
+        System.out.println(temp.name);
+    
     }
 }

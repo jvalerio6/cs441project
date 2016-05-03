@@ -47,11 +47,15 @@ public class DbManager {
         ResultSet result = null;
 
         try {
+            // sql query testing.
+            // System.out.println(sql_query);
+
             stmt = c.createStatement();
             stmt.executeUpdate(sql_query);
 
-            if (func_name == "getTask"){
-                System.out.println("get task class");
+            // need to update this !!!!
+            if (func_name == "getTask" || func_name == "getUser"){
+                System.out.println("Call get sql query");
                 result = stmt.executeQuery(sql_query);
             }
             // stmt.close();
@@ -90,6 +94,44 @@ public class DbManager {
         // execute sql_query
         localExecuteSqlQuery(func_name, sql_query);
     }
+
+    // Get user
+    // Pass in username, return user object 
+    public TeamMember getUser(String username){
+        String func_name = "getUser";
+
+        // sql query to select all task assgiend to 'member_id'
+        String sql_query = String.format("SELECT * from TeamMember WHERE MemName = '%s'", 
+            username);
+
+        ResultSet result = localExecuteSqlQuery(func_name, sql_query);
+
+        int id = 0;
+        String MemName = "";
+        String MemPws = "";
+
+        // traverse and wrap the result into task object
+        try {
+            // check number of columns
+            // int nCol = result.getMetaData().getColumnCount();
+            // System.out.printf("Result has: %d columns. \n", nCol);
+
+            id = result.getInt("id");
+            MemName = result.getString("MemName");
+            MemPws = result.getString("MemPws");
+
+            TeamMember temp_user = new TeamMember(MemName, MemPws, id); 
+            return temp_user;
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        // return the arraylist
+        TeamMember temp_user = new TeamMember(MemName, MemPws, id); 
+        return temp_user;
+    }
+
 
 
     // create task on sql
