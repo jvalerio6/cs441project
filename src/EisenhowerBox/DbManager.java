@@ -67,22 +67,25 @@ public class DbManager {
         return result;
     }
 
-    // ============== DB ===================
-    // Create users on sql
+    // ============== Datebase Action ===================
+    // Create user wtih string field
     public void createUser(String username, String password) {
         String func_name = "createUser";
 
-        // initialize sql query
-        // pass username and pw
+        // initialize sql query - pass username and pw
         System.out.printf("Create username: %s pw: %s\n", username, password);
         String sql_query = String.format("INSERT into TeamMember (MemName, MemPws) values ('%s', '%s')", 
             username, password); 
 
-        // testing sql_query
+        // execue sql_query
         System.out.println(sql_query);
-
-        // execute sql_query
         localExecuteSqlQuery(func_name, sql_query);
+    }
+
+    // Create user in sqldb with user object
+    public void createUser(TeamMember new_member) {
+        // call the createUser Function, pass in string field
+        createUser(new_member.name, new_member.password);
     }
 
     // Get user
@@ -96,15 +99,11 @@ public class DbManager {
 
         ResultSet result = localExecuteSqlQuery(func_name, sql_query);
 
-        int id = 0;
-        String MemName = "";
-        String MemPws = "";
-
         // traverse and wrap the result into task object
         try {
-            id = result.getInt("id");
-            MemName = result.getString("MemName");
-            MemPws = result.getString("MemPws");
+            int id = result.getInt("id");
+            String MemName = result.getString("MemName");
+            String MemPws = result.getString("MemPws");
 
             TeamMember temp_user = new TeamMember(MemName, MemPws, id); 
             return temp_user;
