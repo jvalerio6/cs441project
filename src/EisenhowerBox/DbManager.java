@@ -47,21 +47,19 @@ public class DbManager {
         ResultSet result = null;
 
         try {
-            // sql query testing.
             // System.out.println(sql_query);
-
             stmt = c.createStatement();
             stmt.executeUpdate(sql_query);
 
-            // need to update this !!!!
-            if (func_name == "getTask" || func_name == "getUser"){
-                System.out.println("Call get sql query");
+            // if sql query return values, get result here
+            if (func_name == "getTask" || func_name == "getUser") {
+                // System.out.println("Call get sql query");
                 result = stmt.executeQuery(sql_query);
             }
             // stmt.close();
             return result;
         } catch (Exception e) {
-            System.err.printf("error: %s\n", sql_query);
+            System.err.printf("Function %s error: %s\n", func_name, sql_query);
             System.exit(0);
         }
         return result;
@@ -138,11 +136,43 @@ public class DbManager {
                 member_id, task_title, task_content, current_datetime, current_datetime); 
 
         // testing sql_query
-        System.out.println(sql_query);
+        // System.out.println(sql_query);
 
         // execute sql_query
         localExecuteSqlQuery(func_name, sql_query);
     }
+
+    // Update task with string values
+    public void updateTask(int task_id, String task_title, String task_content, String due_date) {
+        String func_name = "updateTask";
+
+        // TODO
+        String sql_query = String.format("Update Task "+
+            "set task_title = '%s', task_content = '%s', "+
+            "due_date = '%s' WHERE id = '%s'", task_title, task_content, due_date, task_id);
+
+        // print testing 
+        System.out.println(sql_query);
+        localExecuteSqlQuery(func_name, sql_query);
+    }
+
+    // Update task with task object
+    public void updateTask(Task temp) {
+        // get task object field
+        int task_id = temp.getTaskId();
+        String task_title = temp.getTskName();
+        String task_content = temp.getTskDescription();
+        Date due_date = temp.getTskEndDate();
+
+        // convert due date to a string for sql update
+        SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss.SSS");
+        String due_date_sql = ft.format(due_date);
+
+        // update task
+        updateTask(task_id, task_title, task_content, due_date_sql);
+
+    }
+
 
     // function to print out all task
     public void printTask(List<String[]> result_table) {
