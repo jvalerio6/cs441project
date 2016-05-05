@@ -29,7 +29,7 @@ public class Dbdriver {
         // TeamMember new_members = new TeamMember("Javier", "921312");
         // dbm.createUser(new_members);
 
-        // ============ Task Creation ===========================
+        // ================ Task Creation ===========================
         // == create task (user_id, task_title, task_content)
         // dbm.createTask(1, "Buy toliet paper", "extra soft one");
         // dbm.createTask(1, "Prepare for midterm", "");
@@ -63,10 +63,16 @@ public class Dbdriver {
         // =========== Get User testing ================ 
         // if the user doesn't exit, return a empty user object with ID = 0
         TeamMember current_user = dbm.getUser("lala");
-        System.out.println(current_user.ID);
+        System.out.printf("ID: %S / Name: %s / PW: %s\n", current_user.ID, current_user.name, current_user.password);
     
         // if it exist, return user object
         current_user = dbm.getUser("will");
-        System.out.printf(current_user.password);
+        System.out.printf("ID: %S / Name: %s / PW: %s\n", current_user.ID, current_user.name, current_user.password);
+
+
+        // ============ Update Task =================
+        // int task_id, String task_title, String task_content, Date due_date
+        // Date dNow = new Date();
+        dbm.updateTask(3, "updated new title is here !!!!!!!!", "content", "date");
     }
 }
