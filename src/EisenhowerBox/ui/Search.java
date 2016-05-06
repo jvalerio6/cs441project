@@ -57,7 +57,7 @@ public class Search extends JFrame implements DocumentListener {
 			System.err.println("Error: " + e.getMessage());
 		}
 		finally {
-			setSize(500, 250);
+			setSize(500, 200);
 			setTitle("Search");
 			setLayout(new MigLayout("wrap 2", "[right][fill]"));
 			setResizable(false);
@@ -128,29 +128,9 @@ public class Search extends JFrame implements DocumentListener {
 
     }
 
-    /**
-     * Create the GUI and show it.  For thread safety,
-     * this method should be invoked from the
-     * event-dispatching thread.
-     */
-    private static void createAndShowGUI() {
-        //Create and set up the window.
-        JFrame frame = new JFrame("TableFilterDemo");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        //Create and set up the content pane.
-        Search newContentPane = new Search();
-        frame.setContentPane(newContentPane);
-
-        //Display the window.
-        frame.pack();
-        frame.setVisible(true);
-    }
-
     public static void main(String[] args) {
     	Search search = new Search();
     	search.setVisible(true);
-//    	createAndShowGUI();
     }
 
 	public void changedUpdate(DocumentEvent e) {

@@ -198,12 +198,13 @@ public class Gui extends JFrame implements ActionListener {
 
 		final JButton jbtnNewTask = new JButton(" New Task ");
 	    final JButton jbtnLogin = new JButton(" logout ");
+	    final JButton jbtnSearch = new JButton(" Search ");
 	    final JPanel panel = new JPanel(new GridBagLayout());
-	    final JPanel searchPanel = new Search();
+//	    final JPanel searchPanel = Search.createAndShowGUI();
 
 	    jbtnNewTask.setPreferredSize(new Dimension(100,40));
 	    jbtnLogin.setPreferredSize(new Dimension(80, 40));
-
+	    jbtnSearch.setPreferredSize(new Dimension(80, 40));
 
 
 	    GridBagConstraints c = new GridBagConstraints();
@@ -221,7 +222,7 @@ public class Gui extends JFrame implements ActionListener {
 	    c.gridx = 2;
 	    c.ipadx = 25;
 	    c.anchor = GridBagConstraints.EAST;
-	    panel.add(searchPanel, c);
+	    panel.add(jbtnSearch, c);
 
 		if (coloredPanels){
 			panel.setBackground(randColor());
@@ -233,6 +234,14 @@ public class Gui extends JFrame implements ActionListener {
             	at.setVisible(true);
             }
         });
+
+		jbtnSearch.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	Search st = new Search();
+            	st.setVisible(true);
+            }
+        });
+
 	    return panel;
 	}
 
