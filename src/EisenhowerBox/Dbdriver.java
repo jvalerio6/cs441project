@@ -13,9 +13,9 @@ import java.sql.*;
 // java -classpath ".:sqlite-jdbc-3.8.11.2.jar" EisenhowerBox/Dbdriver
 
 public class Dbdriver {
-    public static void main(String[] args) {
+    public static  void test() {
         // ==== Create a new DbManager Class, this handle all sql connections =====
-        DbManager dbm = new DbManager();
+        DbManager dbm = DbManager.getInstance();
 
         // ================ User and Task creation ====================
         // // create user (username, pw)

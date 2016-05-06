@@ -2,12 +2,16 @@ package EisenhowerBox.ui;
 
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Random;
 
 import javax.swing.*;
 
+import EisenhowerBox.DbManager;
 
 public class Gui extends JFrame {	 
 	/**
@@ -24,6 +28,8 @@ public class Gui extends JFrame {
 	protected int hight = screenSize.height / 3;
 	protected int width = screenSize.width / 3;
 	
+	protected  DbManager db;
+	
 	
 	
 	/**
@@ -31,8 +37,9 @@ public class Gui extends JFrame {
 	 * initialises all gui components
 	 */
 	private Gui(){
+		db = DbManager.getInstance();
+		passwordFrame();
 		createGUI();
-		//passwordFrame();
 	}
 	
 	/**
@@ -219,6 +226,13 @@ public class Gui extends JFrame {
 		if (coloredPanels){
 			panel.setBackground(randColor());	
 		}
+		
+		jbtnNewTask.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	AddTask at = new AddTask(instance, true);
+            	at.setVisible(true);
+            }
+        });
 	    return panel;
 	}	
 	

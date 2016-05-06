@@ -9,14 +9,24 @@ import java.sql.*;
 import java.text.*;
 
 
+
 public class DbManager {
     private Connection c;
     private Statement stmt;
-
-    public DbManager() {
+    private static DbManager instance = null;
+    
+    private DbManager() {
         System.out.println("DBManager Created");
         createConnection();
     }
+    
+    public static DbManager getInstance(){
+    	if (instance == null){
+    		instance = new DbManager();
+    	}
+    	return instance;
+    }
+    
 
     // create the connection and put into the global Connection c
     public void createConnection() {
@@ -26,12 +36,13 @@ public class DbManager {
 
         // initialize name and target of database
         db_name = "Eisenhower.db";
-        db_target = ("jdbc:sqlite:").concat(db_name);
-        // System.out.println(db_target);
+        db_target = ("jdbc:sqlite:/Users/erikkalan/git/cs441project/bin/sqlite-jdbc-3.8.11.2.jar ").concat(db_name);
+        System.out.println(db_target);
 
         try {
             Class.forName("org.sqlite.JDBC");
             c = DriverManager.getConnection(db_target);
+            System.out.println("Database Connection created");
         } catch (Exception e)  {
             System.err.println( e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
@@ -158,7 +169,7 @@ public class DbManager {
     // pass in user id, list out all tasks
     public List getTaskArray(int member_id) {
         String func_name = "getTask";
-        List<String[]> table = new ArrayList<>();
+        List<String[]> table = new ArrayList<String[]>();
 
         String sql_query = String.format("SELECT * "+
             "from task WHERE member_id = '%s'", 

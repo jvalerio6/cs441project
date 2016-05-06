@@ -214,18 +214,4 @@ public class ViewTaskDetails extends JFrame implements ActionListener {
 		}
 
 	}
-
-	public static void main(String[] args) {
-
-		Task t = new Task();
-		t.setTskName("Testing Name");
-		t.setTskDescription("Testing description with lots of words just to test whether the pane where description text goes overflows");
-		t.setTskStrtDate(new Date(2016, 8, 5));
-		t.setTskEndDate(new Date(2016, 10, 12));
-		t.setTskPriority("URGENT");
-		t.setTskImportance("IMPORTANT");
-
-		ViewTaskDetails taskDetails = new ViewTaskDetails(t);
-		taskDetails.setVisible(true);
-	}
 }

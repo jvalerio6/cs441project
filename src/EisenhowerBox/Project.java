@@ -19,7 +19,7 @@ public class Project {
 
     // Class Utile defines useful types of structures used
     // in class Project and class task such as Priority and Importance
-	static class Utile {
+	public static class Utile {
 
 	    //define Priority as an enum type
 	    public enum Importance {PRIMORDIAL, SUPERIMPORTANT, IMPORTANT, ORDINARY,
@@ -35,7 +35,7 @@ public class Project {
     // define the project start date and end date
     private Date start_date, end_date ;
     //define the Project priority
-    Utile.Importance importance = Utile.Importance.NOTINDICATED;
+    public Utile.Importance importance = Utile.Importance.NOTINDICATED;
 
     // Constructor with no arguments
     public Project() { }

@@ -9,7 +9,7 @@ import javax.swing.*;
 
 
 
-class Login extends JDialog {
+class Login extends JDialog implements ActionListener {
 
     /**
 	 * 
@@ -94,4 +94,11 @@ class Login extends JDialog {
             }
         });
     }
+
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 }

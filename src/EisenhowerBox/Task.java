@@ -30,8 +30,8 @@ public class Task {
     private String taskStatus = null;                   //define the status of the task
     private String taskTag = null;                      //allows users to add a tag to the task
     private String taskComment = null;                  //allows users to add a comment to the task
-    Project.Utile.Importance importance = Project.Utile.Importance.NOTINDICATED;    //define the Project priority
-    Project.Utile.Priority prio = Project.Utile.Priority.NOTURGENT;     //define the Project priority
+    public Project.Utile.Importance importance = Project.Utile.Importance.NOTINDICATED;    //define the Project priority
+    public Project.Utile.Priority prio = Project.Utile.Priority.NOTURGENT;     //define the Project priority
 
     /**
      //Constructor with no arguments

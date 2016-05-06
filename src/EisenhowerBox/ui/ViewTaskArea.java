@@ -280,7 +280,7 @@ public class ViewTaskArea extends JPanel{
 	}
 	
 	public void updateTasksInPane(){
-		user =  new TeamMember("mario", "Super", "MarBros");
+		//user =  new TeamMember("mario", "Super", "MarBros");
 		
 		
 	}
