@@ -47,11 +47,15 @@ public class DbManager {
         ResultSet result = null;
 
         try {
+            // sql query testing.
+            // System.out.println(sql_query);
+
             stmt = c.createStatement();
             stmt.executeUpdate(sql_query);
 
-            if (func_name == "getTask"){
-                System.out.println("get task class");
+            // need to update this !!!!
+            if (func_name == "getTask" || func_name == "getUser"){
+                System.out.println("Call get sql query");
                 result = stmt.executeQuery(sql_query);
             }
             // stmt.close();
@@ -62,16 +66,6 @@ public class DbManager {
         }
         return result;
     }
-
-    // fake grid location generator 
-    public int randInt(){
-        int min = 1;
-        int max = 4;
-        Random rand = new Random();
-        int randomNum = rand.nextInt((max - min) + 1) + min;
-        return randomNum;
-    }
-
 
     // ============== DB ===================
     // Create users on sql
@@ -91,6 +85,39 @@ public class DbManager {
         localExecuteSqlQuery(func_name, sql_query);
     }
 
+    // Get user
+    // Pass in username, return user object 
+    public TeamMember getUser(String username){
+        String func_name = "getUser";
+
+        // sql query to select all task assgiend to 'member_id'
+        String sql_query = String.format("SELECT * from TeamMember WHERE MemName = '%s'", 
+            username);
+
+        ResultSet result = localExecuteSqlQuery(func_name, sql_query);
+
+        int id = 0;
+        String MemName = "";
+        String MemPws = "";
+
+        // traverse and wrap the result into task object
+        try {
+            id = result.getInt("id");
+            MemName = result.getString("MemName");
+            MemPws = result.getString("MemPws");
+
+            TeamMember temp_user = new TeamMember(MemName, MemPws, id); 
+            return temp_user;
+
+        } catch (Exception e) {
+            System.out.println(e);
+
+            // if no user were found, return a empty user object with ID = 0 
+            TeamMember temp_user = new TeamMember("", "", 0); 
+            return temp_user;
+        }
+    }
+
 
     // create task on sql
     public void createTask(int member_id, String task_title, String task_content) {
@@ -104,11 +131,6 @@ public class DbManager {
         //create a data formatter, and use it convert it to a string. 
         SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss.SSS");
         current_datetime = ft.format(dNow);
-
-        // grid location
-        // Eric says he need this value to do the gui
-        // right now it's a random number fro2m 1 to 4
-        int grid_location = randInt();
 
         System.out.printf("Create task for user %d\n", member_id);
         String sql_query = String.format("INSERT into Task " +
@@ -164,7 +186,7 @@ public class DbManager {
         return table;
     }
 
-    // Function to get arraylist of task object
+    // Get arraylist of task object using User_id
     public ArrayList<Task> getTask(int TeamMember_id) {
         String func_name = "getTask";
 
@@ -195,7 +217,6 @@ public class DbManager {
                 // convert the string date from sql to Java.util.date
                 Date date_created_temp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS").parse(start_date);
                 Date due_date_temp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS").parse(due_date);
-
 
                 // create new task using the string
                 Task temp_task = new Task(id, task_title, task_content, date_created_temp, due_date_temp);             
