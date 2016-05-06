@@ -139,7 +139,7 @@ public class Search extends JFrame implements DocumentListener {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Create and set up the content pane.
-        Search_J newContentPane = new Search_J();
+        Search newContentPane = new Search();
         frame.setContentPane(newContentPane);
 
         //Display the window.
@@ -148,7 +148,7 @@ public class Search extends JFrame implements DocumentListener {
     }
 
     public static void main(String[] args) {
-    	Search_J search = new Search_J();
+    	Search search = new Search();
     	search.setVisible(true);
 //    	createAndShowGUI();
     }
