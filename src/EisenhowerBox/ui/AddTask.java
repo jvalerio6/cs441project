@@ -17,6 +17,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.util.Collections;
+import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
@@ -236,7 +237,7 @@ public class AddTask extends JFrame implements ActionListener, DocumentListener 
 			errorString.append("Invalid start year.\n");
 		}
 
-		startDate = new Date(yearSTART, monthSTART, daySTART);
+		startDate = new Date(yearSTART + ", " + monthSTART + "-" + daySTART);
 
 
 		/** End date */
@@ -249,7 +250,7 @@ public class AddTask extends JFrame implements ActionListener, DocumentListener 
 			errorString.append("Invalid end year.\n");
 		}
 
-		endDate = new Date(yearEND, monthEND, dayEND);
+		endDate = new Date(yearEND + ", " + monthEND + "-" + dayEND);
 
 		if (yearEND < yearSTART) {
 			errorString.append("End date must be prior to start date.\n");
