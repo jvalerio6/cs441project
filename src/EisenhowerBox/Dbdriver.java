@@ -17,15 +17,20 @@ public class Dbdriver {
         // ==== Create a new DbManager Class, this handle all sql connections =====
         DbManager dbm = DbManager.getInstance();
 
-        // ================ User and Task creation ====================
-        // // create user (username, pw)
+        // ================ User creation ====================
+        // == create user (username, pw)
         // dbm.createUser("will", "123");
         // dbm.createUser("ricky", "1231231");
         // dbm.createUser("erik", "456");
         // dbm.createUser("nelson", "999");
         // dbm.createUser("jack", "111");
 
-        // create task (user_id, task_title, task_content)
+        // == create user with user object
+        // TeamMember new_members = new TeamMember("Javier", "921312");
+        // dbm.createUser(new_members);
+
+        // ================ Task Creation ===========================
+        // == create task (user_id, task_title, task_content)
         // dbm.createTask(1, "Buy toliet paper", "extra soft one");
         // dbm.createTask(1, "Prepare for midterm", "");
         // dbm.createTask(1, "Start reading network project material", "");
@@ -55,13 +60,19 @@ public class Dbdriver {
         System.out.println();
 
 
-        // =========== Get User testing ===========
+        // =========== Get User testing ================ 
         // if the user doesn't exit, return a empty user object with ID = 0
-        TeamMember temp = dbm.getUser("lala");
-        System.out.println(temp.ID);
+        TeamMember current_user = dbm.getUser("lala");
+        System.out.printf("ID: %S / Name: %s / PW: %s\n", current_user.ID, current_user.name, current_user.password);
     
         // if it exist, return user object
-        temp = dbm.getUser("will");
-        System.out.printf(temp.password);
+        current_user = dbm.getUser("will");
+        System.out.printf("ID: %S / Name: %s / PW: %s\n", current_user.ID, current_user.name, current_user.password);
+
+
+        // ============ Update Task =================
+        // int task_id, String task_title, String task_content, Date due_date
+        // Date dNow = new Date();
+        dbm.updateTask(3, "updated new title is here !!!!!!!!", "content", "date");
     }
 }
