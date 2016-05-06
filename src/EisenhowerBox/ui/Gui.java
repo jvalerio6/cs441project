@@ -13,7 +13,7 @@ import javax.swing.*;
 
 import EisenhowerBox.DbManager;
 
-public class Gui extends JFrame {	 
+public class Gui extends JFrame implements ActionListener {	 
 	/**
 	 * 
 	 */
@@ -252,6 +252,12 @@ public class Gui extends JFrame {
 		return new Color(randomInt(0,255),
 				randomInt(0,255),
 				randomInt(0,255));
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	
