@@ -5,6 +5,10 @@ import java.util.Random;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.*;
 import java.text.*;
 
@@ -17,7 +21,12 @@ public class DbManager {
 
     public DbManager() {
         System.out.println("DBManager Created");
-        createConnection();
+        try {
+			createConnection();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     public static DbManager getInstance(){
@@ -27,16 +36,35 @@ public class DbManager {
     	return instance;
     }
 
-
     // create the connection and put into the global Connection c
-    public void createConnection() {
-        c = null;
-        String db_name;
-        String db_target;
+    public void createConnection() throws FileNotFoundException {
+    	c = null;
+        String db_name = null;
+        String db_target = null;
+        String db_location = null;
+        final String fileName = "dbAdress.txt";
+    	
+		
+        try {
+        	System.out.println("Reading dbAddress:");
+        	java.net.URL url = getClass().getResource(fileName);
+        	String relativePath = new String(url.getPath());
+        	 BufferedReader br = new BufferedReader(new FileReader(relativePath));
+            db_location = new String(br.readLine());
+            br.close();
+            System.out.println("Completed file read:");
+        } catch (IOException e) {
+        	System.out.println("could not open location file for the db closing:");
+            System.err.format("IOException: %s%n", e);
+        	System.exit(0);
+        }
+        
 
         // initialize name and target of database
-        db_name = "Eisenhower.db";
-        db_target = ("jdbc:sqlite:/Users/erikkalan/git/cs441project/bin/sqlite-jdbc-3.8.11.2.jar ").concat(db_name);
+        
+        
+        //db_target = (db_location).concat(db_name);
+        db_target = db_location+db_name;
         System.out.println(db_target);
 
         try {
@@ -47,6 +75,7 @@ public class DbManager {
             System.err.println( e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
+    
 
         System.out.printf("Opened %s successfully\n", db_name);
     }
