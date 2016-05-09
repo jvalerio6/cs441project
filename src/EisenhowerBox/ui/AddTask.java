@@ -2,23 +2,20 @@ package EisenhowerBox.ui;
 
 /** Class name: AddTask.java
  * 	Initial implementation: Javier Valerio
- *  Implementation Date: April 13th, 2016
+ *  Implementation Date: April 1st, 2016
+ *  Last Modified Date: May 8th, 2016
 */
 
 import EisenhowerBox.*;
-
+import java.text.SimpleDateFormat;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.Date;
-
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
@@ -35,34 +32,36 @@ import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.text.BadLocationException;
 
 public class AddTask extends JFrame implements ActionListener, DocumentListener {
 	private static final long serialVersionUID = 1L;
-
 	public static final int WIDTH = 480;
 	public static final int HEIGHT = 530;
-	private JLabel taskNameLabel, startDateLabel, endDateLabel, importanceLabel, priorityLabel, descriptionLabel, teamMembersLabel;
-	private JTextField taskNameInput, teamMembersInput, yearFieldStartDate, yearFieldEndDate;
+
+	private JLabel taskNameLabel, startDateLabel, endDateLabel, importanceLabel, priorityLabel, descriptionLabel;
+	private JTextField taskNameInput, yearFieldStartDate, yearFieldEndDate;
     private JTextArea descriptionInput;
 	private JButton submitButton, cancelButton;
 	private JPanel startDatePanel, endDatePanel, datePanel, northPanel, southPanel;
 	private JScrollPane jScrollPane1;
 
 	private Date startDate, endDate;
-	private Task newTask;
+	private DbManager dbm = new DbManager();
 
-	JComboBox dayCombo_StartDate, monthCombo_StartDate, dayCombo_EndDate, monthCombo_EndDate, importanceCombo, priorityCombo;
-	String[] months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
-	String[] days = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
-	String[] importance = {"Super Important", "Important", "Ordinary", "Not Important", "Not Indicated"};
-	String[] priorities = {"Urgent", "Not Urgent"};
+	private JComboBox dayCombo_StartDate, monthCombo_StartDate, dayCombo_EndDate, monthCombo_EndDate, importanceCombo, priorityCombo;
+	private String[] months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+	private String[] days = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
+
+	private Project.Utile.Importance[] importanceList = Project.Utile.Importance.values();
+	private Project.Utile.Priority[] priorityList = Project.Utile.Priority.values();
 
 	ImageIcon checkMarkIMG = new ImageIcon(this.getClass().getResource("/img/sign-check.png"));
 	ImageIcon errorIcon = new ImageIcon(this.getClass().getResource("/img/sign-error.png"));
 
 	public AddTask ()
 	{
+
+		// Set up basic frame window configurations
 		setSize(WIDTH, HEIGHT);
 		setTitle("Add New Task");
 		setLayout(new GridLayout(3,1));
@@ -70,7 +69,7 @@ public class AddTask extends JFrame implements ActionListener, DocumentListener 
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-		/**northPanel*/
+		/** northPanel */
 		northPanel = new JPanel();
 		northPanel.setBackground(Color.getHSBColor(0.15f, .12f, 0.80f));
 		northPanel.setLayout(new GridLayout(4,1));
@@ -98,11 +97,10 @@ public class AddTask extends JFrame implements ActionListener, DocumentListener 
 		northPanel.add(jScrollPane1);
 
 		add(northPanel);
-		/**end of northPanel*/
+		/** end of northPanel */
 
-		/**purchaseDatePanel*/
+		/** startDatePanel */
 		startDatePanel = new JPanel();
-		//startDatePanel.setBorder(BorderFactory.createMatteBorder(2, 3, 2, 3, Color.WHITE));
 		startDatePanel.setBackground(Color.getHSBColor(0.15f, .12f, 0.80f));
 		startDatePanel.setLayout(new GridLayout(1,3));
 
@@ -124,11 +122,10 @@ public class AddTask extends JFrame implements ActionListener, DocumentListener 
 		startDatePanel.add(dayCombo_StartDate);
 		startDatePanel.add(yearFieldStartDate);
 
-		/**end of purchaseDatePanel panel*/
+		/**end of startDatePanel */
 
-		/**expirationDatePanel*/
+		/** endDatePanel */
 		endDatePanel = new JPanel();
-		//endDatePanel.setBorder(BorderFactory.createMatteBorder(2, 3, 2, 3, Color.WHITE));
 		endDatePanel.setBackground(Color.getHSBColor(0.15f, .12f, 0.80f));
 		endDatePanel.setLayout(new GridLayout(1,3));
 
@@ -150,7 +147,7 @@ public class AddTask extends JFrame implements ActionListener, DocumentListener 
 		endDatePanel.add(dayCombo_EndDate);
 		endDatePanel.add(yearFieldEndDate);
 
-		/**end of expirationDatePanel panel*/
+		/** end of endDatePanel */
 
 		datePanel = new JPanel();
 		datePanel.setBackground(Color.getHSBColor(0.15f, .12f, 0.80f));
@@ -164,33 +161,31 @@ public class AddTask extends JFrame implements ActionListener, DocumentListener 
 
 		add(datePanel);
 
-		/**southPanel*/
+
+		/** southPanel */
 		southPanel = new JPanel();
-		//southPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
 		southPanel.setBackground(Color.getHSBColor(0.15f, .12f, 0.80f));
 		southPanel.setLayout(new GridLayout(4,1));
 
 		importanceLabel = new JLabel("Importance");
 		importanceLabel.setForeground(Color.DARK_GRAY);
-		importanceCombo = new JComboBox(importance);
+		importanceCombo = new JComboBox(importanceList);
 		importanceCombo.setSelectedIndex(0);
 		importanceCombo.addActionListener(this);
 
 		priorityLabel = new JLabel("Priority");
 		priorityLabel.setForeground(Color.DARK_GRAY);
-		priorityCombo = new JComboBox(priorities);
+		priorityCombo = new JComboBox(priorityList);
 		priorityCombo.setSelectedIndex(0);
 		priorityCombo.addActionListener(this);
 
 		submitButton = new JButton("Submit");
 		submitButton.addActionListener(this);
 		submitButton.setBackground(Color.getHSBColor(0.42f, 0.72f, 0.70f));
-		submitButton.setForeground(Color.WHITE);
 
 		cancelButton = new JButton("Cancel");
 		cancelButton.addActionListener(this);
 		cancelButton.setBackground(Color.getHSBColor(0.07f, 0.75f, 0.89f));
-		cancelButton.setForeground(Color.BLACK);
 
 		southPanel.add(importanceLabel);
 		southPanel.add(importanceCombo);
@@ -202,32 +197,36 @@ public class AddTask extends JFrame implements ActionListener, DocumentListener 
 		southPanel.add(cancelButton, BorderLayout.WEST);
 
 		add(southPanel);
+		/** end of southPanel */
 
-		/**end of southPanel*/
 	}
 
 	public void actionPerformed(ActionEvent e) {
 		String action = e.getActionCommand();
 		StringBuilder errorString = new StringBuilder();
 
-		// Get task name and description
+		// Validate name field
 		String name = taskNameInput.getText();
-		String description = descriptionInput.getText();
-
 		if (name.length() == 0) {
 			errorString.append("Name of task is required.\n");
 		}
 
+		// Validate description field
+		String description = descriptionInput.getText();
 		if (description.length() == 0) {
 			errorString.append("Description of task is required.\n");
 		}
 
-		// Get each drop down value
+		// Get each drop down value for priority and importance
 		String importance = importanceCombo.getSelectedItem().toString();
 		String priority = priorityCombo.getSelectedItem().toString();
-		//String importance = importanceCombo.getSelectedItem().toString(); // selected user
 
-		/** Start date */
+		// Get the integer representation for any priority, importance. These values are stored as integers on the database
+		int priorityIndex = Project.Utile.Priority.valueOf(priority).ordinal() + 1;
+		int importanceIndex = Project.Utile.Importance.valueOf(importance).ordinal() + 1;
+
+
+		/** Validate Start Date **/
 		String monthSTART = monthCombo_StartDate.getSelectedItem().toString();
 		int daySTART = Integer.parseInt(dayCombo_StartDate.getSelectedItem().toString());
 		int yearSTART = validateYear(yearFieldStartDate);
@@ -237,10 +236,14 @@ public class AddTask extends JFrame implements ActionListener, DocumentListener 
 			errorString.append("Invalid start year.\n");
 		}
 
-		startDate = new Date(yearSTART + ", " + monthSTART + "-" + daySTART);
+		String st = "" + yearSTART + ", " + monthSTART + " " + daySTART;
+		startDate = new Date(st);
+
+		// Date object must be converted as a string
+		st = stringifyDate(startDate);
 
 
-		/** End date */
+		/** Validate End Date */
 		String monthEND = monthCombo_EndDate.getSelectedItem().toString();
 		int dayEND = Integer.parseInt(dayCombo_EndDate.getSelectedItem().toString());
 		int yearEND = validateYear(yearFieldEndDate);
@@ -250,35 +253,41 @@ public class AddTask extends JFrame implements ActionListener, DocumentListener 
 			errorString.append("Invalid end year.\n");
 		}
 
-		endDate = new Date(yearEND + ", " + monthEND + "-" + dayEND);
+		String ed = "" + yearEND + ", " + monthEND + " " + dayEND;
+		endDate = new Date(ed);
+		ed = stringifyDate(endDate);
 
 		if (yearEND < yearSTART) {
 			errorString.append("End date must be prior to start date.\n");
 		}
 
-		//When clicking OK
+
+		// All fields are to be validated upon Submission
 		if(action.equals("Submit"))
 		{
 
+			// errorString contains the list of all the errors that must be fixed in order for the task to stored in db
 			if(!errorString.toString().isEmpty())
 			{
 				JOptionPane.showMessageDialog(null, errorString.toString(), "REQUIRED FIELDS", JOptionPane.ERROR_MESSAGE, errorIcon);
 			}
-			else
+			else // errorString is empty. No errors and it's ok to proceed
 			{
-				//Task newTask = new Task(name, null, null);
+				// Save task into the database
+				dbm.createTask(1, name, description, priorityIndex, importanceIndex, stringifyDate(startDate), stringifyDate(endDate));
 
-				JOptionPane.showMessageDialog(null, "Product added successfully", "Task added", JOptionPane.DEFAULT_OPTION, checkMarkIMG);
+				// alert user throughout the process
+				JOptionPane.showMessageDialog(null, "Task added successfully", "Task added", JOptionPane.DEFAULT_OPTION, checkMarkIMG);
 
 				System.out.println("-----------------------------------------------------------------");
 				System.out.println("Name: " + name + "\nDescription: " + description +
-									"\nStart Date: " + startDate.toString() + "\nEnd Date: " + endDate.toString() +
+									"\nStart Date: " + st + "\nEnd Date: " + ed +
 									"\nImportance: " + importance + "\nPriority: " + priority);
 				System.out.println("-----------------------------------------------------------------");
 
-				//newTask = new Task(name, startDate, endDate);
 
-				//dispose();
+				// close AddTask frame
+				dispose();
 			}
 		}
 
@@ -289,6 +298,22 @@ public class AddTask extends JFrame implements ActionListener, DocumentListener 
 		}
 	}
 
+	/*
+		PURPOSE: This method returns the String representation of the Date object passed as a parameter.
+		RETURN: String of date in the format of 'yyyy-MM-dd HH:mm:ss.SSS'
+	*/
+	public String stringifyDate (Date date) {
+        String datetime;
+
+        SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss.SSS");
+        datetime = ft.format(date);
+
+		return datetime;
+	}
+
+	/*
+		PURPOSE: This method validates the year field and makes sure it is a valid integer
+	*/
 	public int validateYear(JTextField dateTextField) {
 		int year = 0;
 
@@ -311,6 +336,7 @@ public class AddTask extends JFrame implements ActionListener, DocumentListener 
 
 		return year;
 	}
+
 
 	public void changedUpdate(DocumentEvent arg0) {	}
 

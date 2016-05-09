@@ -57,18 +57,15 @@ public class Task {
         this.taskStatus = "Started";
     }
 
-
-
-    /**
-     //Constructor with five arguments (new - will)
-     */
-    public Task(int taskId, String name, String taskDescription, Date st_date, Date endDate){
+    public Task(int taskId, String name, String taskDescription, Date st_date, Date endDate, Project.Utile.Importance importance, Project.Utile.Priority priority){
         this.taskId = taskId;
         this.taskName = name;           //assigns task name
         this.taskDescription = taskDescription;
         this.startDate = st_date;       //assigns task start date
         this.endDate = endDate;         //assigns task end date
         this.taskStatus = "Started";
+        this.importance = importance;
+        this.prio = priority;
     }
 
 
@@ -344,12 +341,28 @@ public class Task {
 
     }
 
+    static Project.Utile.Importance getImportanceByIndex(int index) {
+    	Project.Utile.Importance[] importance = Project.Utile.Importance.values();
+
+    	return importance[index];
+    }
+
+    static Project.Utile.Priority getPriorityByIndex(int index) {
+    	Project.Utile.Priority[] priorities = Project.Utile.Priority.values();
+
+    	return priorities[index];
+    }
 
     /**
      //takes no arguments and changes taskStatus to "Completed"
      */
     boolean isComplete() {
         return taskStatus == "Completed";
+    }
+
+    public String toString() {
+    	return "Name: " + getTskName() + "\nDescription: " + getTskDescription() + "\nStart Date: " + getTskStrtDate() +
+    			"\nEnd Date: " + getTskEndDate() + "\nPriority: " + getTskPriority() + "\nImportance: " + getTskImportance() + "\n\n";
     }
 
 }

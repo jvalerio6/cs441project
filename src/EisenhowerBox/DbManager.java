@@ -13,7 +13,6 @@ import java.sql.*;
 import java.text.*;
 
 
-
 public class DbManager {
     private Connection c;
     private Statement stmt;
@@ -39,12 +38,12 @@ public class DbManager {
     // create the connection and put into the global Connection c
     public void createConnection() throws FileNotFoundException {
     	c = null;
-        String db_name = null;
+        String db_name = "EisenHower.db";
         String db_target = null;
         String db_location = null;
         final String fileName = "dbAdress.txt";
-    	
-		
+
+
         try {
         	System.out.println("Reading dbAddress:");
         	java.net.URL url = getClass().getResource(fileName);
@@ -58,14 +57,10 @@ public class DbManager {
             System.err.format("IOException: %s%n", e);
         	System.exit(0);
         }
-        
 
         // initialize name and target of database
-        
-        
-        //db_target = (db_location).concat(db_name);
-        db_target = db_location+db_name;
-        System.out.println(db_target);
+        db_target = db_location + db_name;
+        System.out.println("Database path: " + db_target);
 
         try {
             Class.forName("org.sqlite.JDBC");
@@ -75,7 +70,7 @@ public class DbManager {
             System.err.println( e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
-    
+
 
         System.out.printf("Opened %s successfully\n", db_name);
     }
@@ -87,7 +82,6 @@ public class DbManager {
         ResultSet result = null;
 
         try {
-            // System.out.println(sql_query);
             stmt = c.createStatement();
             stmt.executeUpdate(sql_query);
 
@@ -157,26 +151,16 @@ public class DbManager {
 
 
     // create task on sql
-    public void createTask(int member_id, String task_title, String task_content) {
+    public void createTask(int member_id, String task_title, String task_content, int priority, int importance, String startDate, String endDate) {
         String func_name = "createTask";
-        String current_datetime;
-
-        // get current datetime
-        // Need to convert java date obj into: TEXT as strings ("YYYY-MM-DD HH:MM:SS.SSS") for sqlite
-        Date dNow = new Date();
-
-        //create a data formatter, and use it convert it to a string.
-        SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss.SSS");
-        current_datetime = ft.format(dNow);
 
         System.out.printf("Create task for user %d\n", member_id);
         String sql_query = String.format("INSERT into Task " +
-                "(TeamMember_id, task_title, task_content, start_date, due_date) values " +
-                "('%s', '%s', '%s', '%s', '%s')",
-                member_id, task_title, task_content, current_datetime, current_datetime);
+                "(TeamMember_id, task_title, task_content, start_date, due_date, T_Prio, T_Urg) values " +
+                "(\"%s\", \"%s\", \"%s\", \"%s\", \"%s\", %d, %d);",
+                member_id, task_title, task_content, startDate, endDate, priority, importance);
 
-        // testing sql_query
-        // System.out.println(sql_query);
+        System.out.println("SQL Query: " + sql_query);
 
         // execute sql_query
         localExecuteSqlQuery(func_name, sql_query);
@@ -256,7 +240,7 @@ public class DbManager {
     }
 
     // Get arraylist of task object using User_id
-    public ArrayList<Task> getTask(int TeamMember_id) {
+    public ArrayList<Task> getTaskList(int TeamMember_id) {
         String func_name = "getTask";
 
         // sql query to select all task assgiend to 'member_id'
@@ -283,12 +267,19 @@ public class DbManager {
                 String task_title = result.getString("task_title");
                 String task_content = result.getString("task_content");
 
+                int importanceInt = result.getInt("T_Urg");
+                Project.Utile.Importance importance = Task.getImportanceByIndex(importanceInt - 1);
+
+                int priorityInt = result.getInt("T_Prio");
+                Project.Utile.Priority priority = Task.getPriorityByIndex(priorityInt - 1);
+
                 // convert the string date from sql to Java.util.date
                 Date date_created_temp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS").parse(start_date);
                 Date due_date_temp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS").parse(due_date);
 
                 // create new task using the string
-                Task temp_task = new Task(id, task_title, task_content, date_created_temp, due_date_temp);
+                Task temp_task = new Task(id, task_title, task_content, date_created_temp, due_date_temp, importance, priority);
+                System.out.println("added task: " + temp_task.toString());
 
                 // append the task object to the task arraylist
                 task_list.add(temp_task);

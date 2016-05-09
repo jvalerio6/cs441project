@@ -161,12 +161,12 @@ public class Search extends JFrame implements DocumentListener {
 	public Vector<Task> createVectorTasks( ) {
 		Vector<Task> tlist = new Vector<Task>();
 
-		tlist.add(new Task(1, "Finish CS 433 Assignment", "Testing Description", new Date(2015, 1, 1), new Date(2016, 3, 6)));
-		tlist.add(new Task(2, "Report work study hours", "Testing Description 2", new Date(2015, 1, 1), new Date(2016, 3, 6)));
-		tlist.add(new Task(3, "Implement Java classes", "Testing Description 3", new Date(2015, 1, 1), new Date(2016, 3, 6)));
-		tlist.add(new Task(4, "Finish networking project", "Testing Description 4", new Date(2015, 1, 1), new Date(2016, 3, 6)));
-		tlist.add(new Task(5, "Visit the moon", "Testing Description 5", new Date(2015, 1, 1), new Date(2016, 3, 6)));
-		tlist.add(new Task(6, "Contact Google headquarters", "Testing Description 6", new Date(2015, 1, 1), new Date(2016, 3, 6)));
+//		tlist.add(new Task(1, "Finish CS 433 Assignment", "Testing Description", new Date(2015, 1, 1), new Date(2016, 3, 6)));
+//		tlist.add(new Task(2, "Report work study hours", "Testing Description 2", new Date(2015, 1, 1), new Date(2016, 3, 6)));
+//		tlist.add(new Task(3, "Implement Java classes", "Testing Description 3", new Date(2015, 1, 1), new Date(2016, 3, 6)));
+//		tlist.add(new Task(4, "Finish networking project", "Testing Description 4", new Date(2015, 1, 1), new Date(2016, 3, 6)));
+//		tlist.add(new Task(5, "Visit the moon", "Testing Description 5", new Date(2015, 1, 1), new Date(2016, 3, 6)));
+//		tlist.add(new Task(6, "Contact Google headquarters", "Testing Description 6", new Date(2015, 1, 1), new Date(2016, 3, 6)));
 
 		return tlist;
 	}

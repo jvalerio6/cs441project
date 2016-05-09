@@ -12,11 +12,11 @@ import javax.swing.*;
 class Login extends JDialog implements ActionListener {
 
     /**
-	 * 
+	 *
 	 */
-	
+
 	private static final long serialVersionUID = 21L;
-	
+
 	private final JLabel jlblUsername = new JLabel("Username");
     private final JLabel jlblPassword = new JLabel("Password");
 
@@ -27,14 +27,14 @@ class Login extends JDialog implements ActionListener {
     private final JButton jbtCancel = new JButton("Cancel");
 
     private final JLabel jlblStatus = new JLabel(" ");
-    
-    
-    
+
+
+
     public Login() {
         this(null, true);
     }
-    
-    
+
+
     public Login(final JFrame parent, boolean modal) {
         super(parent, "User Login", modal);
 
@@ -67,10 +67,10 @@ class Login extends JDialog implements ActionListener {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-        addWindowListener(new WindowAdapter() {  
-            public void windowClosing(WindowEvent e) {  
-                System.exit(0);  
-            }  
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
         });
 
 
@@ -85,7 +85,7 @@ class Login extends JDialog implements ActionListener {
                 }
             }
         });
-        
+
         jbtCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
@@ -99,6 +99,6 @@ class Login extends JDialog implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

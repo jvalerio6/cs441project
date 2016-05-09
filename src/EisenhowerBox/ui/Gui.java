@@ -60,6 +60,13 @@ public class Gui extends JFrame implements ActionListener {
 		final JPanel jpnlTasks =new ViewTaskArea();
 		final JPanel jpnlMenu = menuBar();
 
+		try {
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+        }
+		catch (Exception e) {
+			System.err.println("Error: " + e.getMessage());
+		}
+
 		GridBagConstraints c = new GridBagConstraints();
 
 			//Adds the menue to the top so it takes up the entire width
@@ -109,6 +116,7 @@ public class Gui extends JFrame implements ActionListener {
         	    frame.add(panel);
                 frame.pack();
                 frame.setVisible(true);
+                frame.setLocationRelativeTo(null);
                 frame.setPreferredSize(panel.getPreferredSize());
     		}
     	});
@@ -131,7 +139,7 @@ public class Gui extends JFrame implements ActionListener {
             public void run() {
                 JFrame frame = new JFrame();
                 //frame.setMinimumSize(new Dimension(500, 200));
-                frame.add(login);
+                //frame.add(login);
                 frame.getContentPane().setBackground(Color.BLACK);
                 frame.setTitle("Logged In");
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -239,6 +247,17 @@ public class Gui extends JFrame implements ActionListener {
             public void actionPerformed(ActionEvent e) {
             	Search st = new Search();
             	st.setVisible(true);
+            }
+        });
+
+		jbtnLogin.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	int answer = JOptionPane.showConfirmDialog(null, "Are you sure you want to log out?", "Log out", JOptionPane.YES_NO_OPTION);
+
+            	if (answer == JOptionPane.YES_OPTION) {
+            		dispose();
+            		System.exit(0);
+            	}
             }
         });
 

@@ -3,7 +3,7 @@ package EisenhowerBox;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
-import java.sql.*; 
+import java.sql.*;
 
 
 // build with:
@@ -50,7 +50,7 @@ public class Dbdriver {
         // create arraylist of task object
         // call the funciton with user id, return arraylist of task objects
         ArrayList<Task> task_list = new ArrayList<Task>();
-        task_list = dbm.getTask(1);
+        task_list = dbm.getTaskList(1);
 
         // print out the task
         System.out.printf("\n=== Task id: %d === \n", task_list.get(0).getTaskId());
@@ -60,11 +60,11 @@ public class Dbdriver {
         System.out.println();
 
 
-        // =========== Get User testing ================ 
+        // =========== Get User testing ================
         // if the user doesn't exit, return a empty user object with ID = 0
         TeamMember current_user = dbm.getUser("lala");
         System.out.printf("ID: %S / Name: %s / PW: %s\n", current_user.ID, current_user.name, current_user.password);
-    
+
         // if it exist, return user object
         current_user = dbm.getUser("will");
         System.out.printf("ID: %S / Name: %s / PW: %s\n", current_user.ID, current_user.name, current_user.password);
