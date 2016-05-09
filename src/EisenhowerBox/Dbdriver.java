@@ -73,6 +73,6 @@ public class Dbdriver {
         // ============ Update Task =================
         // int task_id, String task_title, String task_content, Date due_date
         // Date dNow = new Date();
-        dbm.updateTask(3, "updated new title is here !!!!!!!!", "content", "date");
+        dbm.updateTask(3, "updated new title is here !!!!!!!!", "content", 1, 3);
     }
 }

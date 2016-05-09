@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
@@ -47,8 +48,12 @@ public class ViewTaskDetails extends JFrame implements ActionListener {
 
 	JComboBox importanceCombo, priorityCombo;
 
+	ImageIcon checkMarkIMG = new ImageIcon(this.getClass().getResource("/img/sign-check.png"));
+
 	private String[] importanceList = Project.getImportanceList();
 	private String[] priorityList = Project.getPriorityList();
+
+	private DbManager dbm = new DbManager();
 
 	// Icons for pane
 	ImageIcon ARROW_LEFT_ICO = new ImageIcon(this.getClass().getResource("/img/arrow-back-28.png"));
@@ -112,20 +117,15 @@ public class ViewTaskDetails extends JFrame implements ActionListener {
 
 			importanceLabel = new JLabel("Importance");
 			importanceLabel.setForeground(Color.DARK_GRAY);
-			//importanceText = new JTextField(task.getTskImportance());
 			importanceCombo = new JComboBox(importanceList);
 			importanceCombo.setSelectedItem(task.getTskImportance());
 			importanceCombo.addActionListener(this);
 
-//			importanceText.setEditable(false);
-
 			priorityLabel = new JLabel("Priority");
 			priorityLabel.setForeground(Color.DARK_GRAY);
-//			priorityText = new JTextField(task.getTskPriority());
 			priorityCombo = new JComboBox(priorityList);
 			priorityCombo.setSelectedItem(task.getTskPriority());
 			priorityCombo.addActionListener(this);
-//			priorityText.setEditable(false);
 
 			startDateLabel = new JLabel("Start Date");
 			startDateLabel.setForeground(Color.DARK_GRAY);
@@ -184,7 +184,6 @@ public class ViewTaskDetails extends JFrame implements ActionListener {
 
 		if(action.equals("Save Details"))
 		{
-			// save
 
 			System.out.println("\nInformation: \nName: " + task.getTskName() +
 								"\nDescription: " + task.getTskDescription() +
@@ -195,6 +194,16 @@ public class ViewTaskDetails extends JFrame implements ActionListener {
 			task.setTskDescription(descriptionText.getText());
 			task.setTskImportance(importanceCombo.getSelectedItem().toString());
 			task.setTskPriority(priorityCombo.getSelectedItem().toString());
+
+
+			// Get the integer representation for any priority, importance. These values are stored as integers on the database
+			int priorityIndex = Project.Utile.Priority.valueOf(task.getTskPriority()).ordinal() + 1;
+			int importanceIndex = Project.Utile.Importance.valueOf(task.getTskImportance()).ordinal() + 1;
+
+			// save
+			dbm.updateTask(task.getTaskId(), task.getTskName(), task.getTskDescription(), priorityIndex, importanceIndex);
+
+			JOptionPane.showMessageDialog(null, "Task updated successfully", "Task Update", JOptionPane.DEFAULT_OPTION, checkMarkIMG);
 
 			// send updated task to db
 			System.out.println();

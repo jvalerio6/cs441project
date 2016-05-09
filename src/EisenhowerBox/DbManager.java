@@ -167,13 +167,12 @@ public class DbManager {
     }
 
     // Update task with string values
-    public void updateTask(int task_id, String task_title, String task_content, String due_date) {
+    public void updateTask(int task_id, String task_title, String task_content, int priority, int importance) {
         String func_name = "updateTask";
 
-        // TODO
-        String sql_query = String.format("Update Task "+
-            "set task_title = '%s', task_content = '%s', "+
-            "due_date = '%s' WHERE id = '%s'", task_title, task_content, due_date, task_id);
+        String sql_query = String.format("UPDATE Task " +
+            "set task_title = \"%s\", task_content = \"%s\", T_Prio = %d, T_Urg = %d WHERE id = \"%s\" ",
+            task_title, task_content, priority, importance, task_id);
 
         // print testing
         System.out.println(sql_query);
@@ -186,14 +185,11 @@ public class DbManager {
         int task_id = temp.getTaskId();
         String task_title = temp.getTskName();
         String task_content = temp.getTskDescription();
-        Date due_date = temp.getTskEndDate();
-
-        // convert due date to a string for sql update
-        SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss.SSS");
-        String due_date_sql = ft.format(due_date);
+        int prio = Project.Utile.Priority.valueOf(temp.getTskPriority()).ordinal();
+        int imp = Project.Utile.Importance.valueOf(temp.getTskImportance()).ordinal();
 
         // update task
-        updateTask(task_id, task_title, task_content, due_date_sql);
+        updateTask(task_id, task_title, task_content, prio, imp);
 
     }
 
