@@ -20,10 +20,10 @@ public class DbManager {
 
     public DbManager() {
         System.out.println("DBManager Created");
+
         try {
 			createConnection();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }
@@ -71,7 +71,6 @@ public class DbManager {
             System.exit(0);
         }
 
-
         System.out.printf("Opened %s successfully\n", db_name);
     }
 
@@ -86,8 +85,9 @@ public class DbManager {
             stmt.executeUpdate(sql_query);
 
             // if sql query return values, get result here
-            if (func_name == "getTask" || func_name == "getUser") {
-                // System.out.println("Call get sql query");
+            if (func_name == "getTask" || func_name == "getUser" ||
+            	func_name == "getProjectManagerList" || func_name == "getTeamMemberList") {
+
                 result = stmt.executeQuery(sql_query);
             }
             // stmt.close();
@@ -149,6 +149,60 @@ public class DbManager {
         }
     }
 
+    public List<ProjectManager> getProjectManagerList () {
+    	List<ProjectManager> pmList = new ArrayList<ProjectManager>();
+    	String func_name = "getProjectManagerList";
+
+    	String sql_query = "SELECT * from Manager;";
+
+    	ResultSet result = localExecuteSqlQuery(func_name, sql_query);
+
+    	// traverse and wrap the result into task object
+        try {
+
+            while( result.next()) {
+            	int id = result.getInt("MgrID");
+                String memName = result.getString("MgrName");
+                String memPassword = result.getString("MgrPws");
+
+                ProjectManager pm = new ProjectManager(memName, memPassword, id);
+
+                pmList.add(pm);
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+    	return pmList;
+    }
+
+    public List<TeamMember> getTeamMemberList () {
+    	List<TeamMember> tmList = new ArrayList<TeamMember>();
+    	String func_name = "getTeamMemberList";
+
+    	String sql_query = "SELECT * from TeamMember;";
+    	ResultSet result = localExecuteSqlQuery(func_name, sql_query);
+
+    	// traverse and wrap the result into task object
+        try {
+
+            while( result.next()) {
+            	int id = result.getInt("id");
+                String memName = result.getString("MemName");
+                String memPassword = result.getString("MemPws");
+
+                TeamMember tm = new TeamMember(memName, memPassword, id);
+
+                tmList.add(tm);
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+    	return tmList;
+    }
 
     // create task on sql
     public void createTask(int member_id, String task_title, String task_content, int priority, int importance, String startDate, String endDate) {
@@ -160,7 +214,7 @@ public class DbManager {
                 "(\"%s\", \"%s\", \"%s\", \"%s\", \"%s\", %d, %d);",
                 member_id, task_title, task_content, startDate, endDate, priority, importance);
 
-        System.out.println("SQL Query: " + sql_query);
+        //System.out.println("SQL Query: " + sql_query);
 
         // execute sql_query
         localExecuteSqlQuery(func_name, sql_query);
@@ -174,8 +228,8 @@ public class DbManager {
             "set task_title = \"%s\", task_content = \"%s\", T_Prio = %d, T_Urg = %d WHERE id = \"%s\" ",
             task_title, task_content, priority, importance, task_id);
 
-        // print testing
-        System.out.println(sql_query);
+        //System.out.println(sql_query);
+
         localExecuteSqlQuery(func_name, sql_query);
     }
 
@@ -190,7 +244,6 @@ public class DbManager {
 
         // update task
         updateTask(task_id, task_title, task_content, prio, imp);
-
     }
 
 

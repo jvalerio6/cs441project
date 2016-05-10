@@ -2,9 +2,11 @@ package EisenhowerBox.ui;
 
 import java.awt.Color;
 import java.awt.Component;
+
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
+
 import EisenhowerBox.Task;
 
 class LabelRenderer extends JLabel implements ListCellRenderer {
@@ -30,6 +32,7 @@ class LabelRenderer extends JLabel implements ListCellRenderer {
 
       setBackground(isSelected ? Color.getHSBColor(0.15f, .12f, 0.80f) : Color.WHITE);
       setForeground(isSelected ? Color.WHITE : Color.DARK_GRAY);
+
       return this;
     }
 }

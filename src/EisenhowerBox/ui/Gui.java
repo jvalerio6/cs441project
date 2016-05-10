@@ -1,6 +1,5 @@
 package EisenhowerBox.ui;
 
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,9 +13,7 @@ import javax.swing.*;
 import EisenhowerBox.DbManager;
 
 public class Gui extends JFrame implements ActionListener {
-	/**
-	 *
-	 */
+
 	private static final long serialVersionUID = 1L;
 
 	private static Gui instance = null;
@@ -29,7 +26,6 @@ public class Gui extends JFrame implements ActionListener {
 	protected int width = screenSize.width / 3;
 
 	protected  DbManager db;
-
 
 
 	/**
@@ -46,7 +42,7 @@ public class Gui extends JFrame implements ActionListener {
      *
      * @return Login instance
      */
-    public static Gui getInstance(){
+    public static Gui getInstance() {
     	if (instance == null){
     		instance = new Gui();
     	}
@@ -54,7 +50,7 @@ public class Gui extends JFrame implements ActionListener {
     }
 
 
-    void createGUI(){
+    void createGUI() {
     	final JPanel panel = new JPanel(new GridBagLayout());
 		final JPanel jpnlView = viewPanel();
 		final JPanel jpnlTasks =new ViewTaskArea();
@@ -69,7 +65,7 @@ public class Gui extends JFrame implements ActionListener {
 
 		GridBagConstraints c = new GridBagConstraints();
 
-			//Adds the menue to the top so it takes up the entire width
+		//Adds the menue to the top so it takes up the entire width
 		c.weightx = 1.0;   						//request any extra Horizontal space
 		c.anchor = GridBagConstraints.PAGE_START;
 		c.insets = new Insets(10,5,5,5);
@@ -81,7 +77,7 @@ public class Gui extends JFrame implements ActionListener {
 
 
 
-			// Adds the View Panel to the side and sizes it
+		// Adds the View Panel to the side and sizes it
 		c.weighty = 0.5;
 		c.weightx = 0.0;
 		c.anchor = GridBagConstraints.WEST;
@@ -93,7 +89,7 @@ public class Gui extends JFrame implements ActionListener {
 		panel.add(jpnlView, c);
 
 
-			// Adds the Task Panel to the right
+		// Adds the Task Panel to the right
 		c.weightx = 1.0;
 		c.weighty = 0.5;
 		c.gridx = 1;
@@ -208,12 +204,10 @@ public class Gui extends JFrame implements ActionListener {
 	    final JButton jbtnLogin = new JButton(" logout ");
 	    final JButton jbtnSearch = new JButton(" Search ");
 	    final JPanel panel = new JPanel(new GridBagLayout());
-//	    final JPanel searchPanel = Search.createAndShowGUI();
 
 	    jbtnNewTask.setPreferredSize(new Dimension(100,40));
 	    jbtnLogin.setPreferredSize(new Dimension(80, 40));
 	    jbtnSearch.setPreferredSize(new Dimension(80, 40));
-
 
 	    GridBagConstraints c = new GridBagConstraints();
 	    c.gridx = 0;
@@ -271,29 +265,19 @@ public class Gui extends JFrame implements ActionListener {
 	 * @param max: Largest integer
 	 * @return randomized int between perameters
 	 */
-	public int randomInt(int min, int max){
+	public int randomInt(int min, int max) {
 		int randInt = rand.nextInt((max - min) + 1) + min;
 		return randInt;
 
 	}
-	public Color randColor(){
+	public Color randColor() {
 		return new Color(randomInt(0,255),
 				randomInt(0,255),
 				randomInt(0,255));
 	}
 
-	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 
 	}
-
-
-
-
-
-
 }
-
-
-

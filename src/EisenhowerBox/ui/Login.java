@@ -1,19 +1,15 @@
 package EisenhowerBox.ui;
 
-
-import java.awt.*;
+import java.awt.GridLayout;
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.*;
-import java.util.Arrays;
-
+import java.util.*;
 import javax.swing.*;
-
+import EisenhowerBox.*;
 
 
 class Login extends JDialog implements ActionListener {
-
-    /**
-	 *
-	 */
 
 	private static final long serialVersionUID = 21L;
 
@@ -28,9 +24,13 @@ class Login extends JDialog implements ActionListener {
 
     private final JLabel jlblStatus = new JLabel(" ");
 
+    private DbManager dbm = new DbManager();
+    List<TeamMember> memberList = dbm.getTeamMemberList();
+    List<ProjectManager> managerList = dbm.getProjectManagerList();
 
 
     public Login() {
+
         this(null, true);
     }
 
@@ -76,10 +76,16 @@ class Login extends JDialog implements ActionListener {
 
         jbtOk.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (Arrays.equals("password".toCharArray(), jpfPassword.getPassword())
-                        && "username".equals(jtfUsername.getText())) {
-                    parent.setVisible(true);
-                    setVisible(false);
+//              if (Arrays.equals("password".toCharArray(), jpfPassword.getPassword())
+//                        && "username".equals(jtfUsername.getText())) {
+//                    parent.setVisible(true);
+//                    setVisible(false);
+
+            	String password = String.valueOf(jpfPassword.getPassword());
+
+            	if ( isExistingUser(jtfUsername.getText(), password) ) {
+            		parent.setVisible(true);
+            	  	setVisible(false);
                 } else {
                     jlblStatus.setText("Invalid username or password");
                 }
@@ -95,10 +101,31 @@ class Login extends JDialog implements ActionListener {
         });
     }
 
-
-	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
 
+	}
+
+	public boolean isExistingUser(String username, String password) {
+		boolean isExisting = false;
+
+		for (ProjectManager pm : managerList) {
+			if (pm.getName().equals(username) && pm.getPassword().equals(password)) {
+				isExisting = true;
+				break;
+			}
+		}
+
+		if (!isExisting) {
+			for (TeamMember tm : memberList) {
+				if (tm.getName().equals(username) && tm.getPassword().equals(password)) {
+					isExisting = true;
+					break;
+				}
+			}
+		}
+
+		System.out.println("isExisting " + isExisting);
+
+		return isExisting;
 	}
 }

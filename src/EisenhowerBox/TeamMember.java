@@ -51,4 +51,11 @@ public class TeamMember extends User {
 		return ( (this.task_list.indexOf(task) >= 0) && (task.isComplete()== true) ) ? true : false;
 	}
 
+	public String getName() {
+	    return this.name;
+	}
+
+	public String getPassword() {
+	    return this.password;
+	}
 }

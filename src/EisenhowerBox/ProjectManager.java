@@ -57,7 +57,7 @@ public class ProjectManager extends User {
 
     // method getName() returns a string reprsenting the name of the
     // manager and takes no argument
-    String getName() {
+    public String getName() {
     	return this.name;
     }
 
@@ -70,7 +70,7 @@ public class ProjectManager extends User {
 
     // method getPassword() returns a string reprsenting the password of the
     // manager and takes no argument
-    String getPassword() {
+    public String getPassword() {
     	return this.password;
     }
 
