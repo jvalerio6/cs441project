@@ -49,8 +49,7 @@ public class ViewTaskArea extends JPanel{
 	protected final JScrollPane jscpn2 = new JScrollPane();
 	protected final JScrollPane jscpn3 = new JScrollPane();
 	protected final JScrollPane jscpn4 = new JScrollPane();
-	DbManager dbm = new DbManager();
-	List<Task> allTasks = dbm.getTaskList(1);
+	List<Task> allTasks = DbManager.getInstance().getTaskList();
 
 	User user = null;
 
@@ -61,33 +60,13 @@ public class ViewTaskArea extends JPanel{
 		init();
     }
 
+	public void refreshTaskArea() {
 
-	/** help
-	 * Initializes components necisary for the Panel
-	 * Needs to add generalized support and then full support for
-	 * the individual sub classes
-	 * May need to have some variables be changed to class variables
-	 */
-//	private void initComponents() {
-//
-//		this.setBackground(Color.black);
-//		this.setPreferredSize(panel_dimension);
-//		this.setLayout(new GridLayout(2,0));
-//
-//		setDefaultTextArea(jtxpn1);
-//
-//        JPanel wrapPanel = new JPanel(new BorderLayout());
-//        wrapPanel.add(jtxpn1);
-//
-//        jscpn1.setPreferredSize(new Dimension(panel_dimension.width -10, panel_dimension.height -10));
-//        jscpn1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-//        jscpn1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-//        jscpn1.add(wrapPanel);
-//        jscpn1.setViewportView(jtxpn1);
-//
-//        this.add(jscpn1);
-//        this.setVisible(true);
-//	}
+		allTasks = DbManager.getInstance().getTaskList();
+
+		init();
+	}
+
 
 	/**
 	 * Initializes components necisary for the Panel
@@ -115,6 +94,8 @@ public class ViewTaskArea extends JPanel{
 		}
 
         this.setVisible(true);
+
+        this.doLayout();
 	}
 
 
@@ -185,25 +166,24 @@ public class ViewTaskArea extends JPanel{
 //	    StyleConstants.setFontSize(taskStyle, 16);
 
 
-	    try {
-	        SwingUtilities.invokeAndWait(new Runnable() {
-	          public void run() {
+//	    try {
+//	        SwingUtilities.invokeAndWait(new Runnable() {
+//	          public void run() {
 	            try {
 
 	            	// Add the text to the document
 	            	doc.insertString(1, finalDisplayName + " (" + getNumTaskByDisplayName(finalDisplayName) + ")" + "\n", taskStyle);
 
-	            	//System.out.println(tasks);
 	            	//doc.insertString(doc.getLength(), getTaskListByDisplayName(finalDisplayName), DateStyle);
 
 	            } catch (BadLocationException e) {
 	            }
-	          }
-	        });
-	      } catch (Exception e) {
-	        System.out.println("Exception when constructing document: " + e);
-	        System.exit(1);
-	      }
+//	          }
+//	        });
+//	      } catch (Exception e) {
+//	        System.out.println("Exception when constructing document: " + e);
+//	        System.exit(1);
+//	      }
 
 	    wrapPanel.setBackground(Color.getHSBColor((float)0.55, (float)0.04, (float)0.96));
 	    wrapPanel.add(textPane, c);

@@ -53,8 +53,6 @@ public class ViewTaskDetails extends JFrame implements ActionListener {
 	private String[] importanceList = Project.getImportanceList();
 	private String[] priorityList = Project.getPriorityList();
 
-	private DbManager dbm = new DbManager();
-
 	// Icons for pane
 	ImageIcon ARROW_LEFT_ICO = new ImageIcon(this.getClass().getResource("/img/arrow-back-28.png"));
 	ImageIcon CALENDAR_ICO = new ImageIcon(this.getClass().getResource("/img/calendar-32.png"));
@@ -201,7 +199,7 @@ public class ViewTaskDetails extends JFrame implements ActionListener {
 			int importanceIndex = Project.Utile.Importance.valueOf(task.getTskImportance()).ordinal() + 1;
 
 			// save
-			dbm.updateTask(task.getTaskId(), task.getTskName(), task.getTskDescription(), priorityIndex, importanceIndex);
+			DbManager.getInstance().updateTask(task.getTaskId(), task.getTskName(), task.getTskDescription(), priorityIndex, importanceIndex);
 
 			JOptionPane.showMessageDialog(null, "Task updated successfully", "Task Update", JOptionPane.DEFAULT_OPTION, checkMarkIMG);
 

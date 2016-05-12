@@ -50,7 +50,7 @@ public class Dbdriver {
         // create arraylist of task object
         // call the funciton with user id, return arraylist of task objects
         ArrayList<Task> task_list = new ArrayList<Task>();
-        task_list = dbm.getTaskList(1);
+        task_list = dbm.getTaskList();
 
         // print out the task
         System.out.printf("\n=== Task id: %d === \n", task_list.get(0).getTaskId());

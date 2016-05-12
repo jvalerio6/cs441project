@@ -8,7 +8,6 @@ package EisenhowerBox;
  * Samir Asfirane, Yu (Will) Tian
  */
 
-
 /*
  * Class Project defines the object project
  * it's attributes and methods
@@ -16,8 +15,6 @@ package EisenhowerBox;
  */
 
 import java.util.Date;
-// import EisenhowerBox.Date;
-
 
 public class Task {
 
@@ -210,26 +207,6 @@ public class Task {
     }
 
 
-    //not finished, might not use
-    //takes no arguments and returns the urgency of the task
-    public void getTaskUrgency() {
-
-        //due today
-        if (startDate == endDate && startDate != null && endDate != null){
-
-
-
-        }
-
-
-        //7 days
-
-        //one month
-        //return number of days left as an int
-
-    }
-
-
     /**
      //adds an ID for a task
      */
@@ -341,12 +318,18 @@ public class Task {
 
     }
 
+    /**
+    //gets the importance of the task based on the int value passed in
+    */
     static Project.Utile.Importance getImportanceByIndex(int index) {
     	Project.Utile.Importance[] importance = Project.Utile.Importance.values();
 
     	return importance[index];
     }
 
+    /**
+    //gets the priority of the task based on the int value passed in
+    */
     static Project.Utile.Priority getPriorityByIndex(int index) {
     	Project.Utile.Priority[] priorities = Project.Utile.Priority.values();
 
@@ -360,10 +343,13 @@ public class Task {
         return taskStatus == "Completed";
     }
 
+    /**
+    //returns a string with the task name, description, start date, end date, priority, and importance
+    //each separated on a new line
+    */
     public String toString() {
     	return "Name: " + getTskName() + "\nDescription: " + getTskDescription() + "\nStart Date: " + getTskStrtDate() +
     			"\nEnd Date: " + getTskEndDate() + "\nPriority: " + getTskPriority() + "\nImportance: " + getTskImportance() + "\n\n";
     }
 
 }
-

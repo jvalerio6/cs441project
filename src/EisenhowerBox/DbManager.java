@@ -288,14 +288,12 @@ public class DbManager {
         return table;
     }
 
-    // Get arraylist of task object using User_id
-    public ArrayList<Task> getTaskList(int TeamMember_id) {
+    // Get arraylist of task object
+    public ArrayList<Task> getTaskList( ) {
         String func_name = "getTask";
 
         // sql query to select all task assgiend to 'member_id'
-        String sql_query = String.format("SELECT * "+
-            "from task WHERE TeamMember_id = '%s'",
-            TeamMember_id);
+        String sql_query = "SELECT * from task;";
 
         // execute sql query
         ResultSet result = localExecuteSqlQuery(func_name, sql_query);

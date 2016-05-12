@@ -22,7 +22,6 @@ public class Search extends JFrame implements DocumentListener {
     private JLabel searchLabel, sr;
     public Vector<Task> tasksFromDB;
     private JComboBox tasks;
-    private DbManager dbm = new DbManager();
     public Vector<Task> tVector = createVectorTasks();
 
     ImageIcon SEARCH_ICO = new ImageIcon(this.getClass().getResource("/img/search-24.png"));
@@ -127,7 +126,7 @@ public class Search extends JFrame implements DocumentListener {
 
 	public Vector<Task> createVectorTasks( ) {
 		Vector<Task> tlist = new Vector<Task>();
-		List<Task> allTasks = dbm.getTaskList(1);
+		List<Task> allTasks = DbManager.getInstance().getTaskList();
 
 		for (Task t : allTasks) {
 			tlist.add(t);

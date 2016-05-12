@@ -7,6 +7,7 @@ package EisenhowerBox.ui;
 */
 
 import EisenhowerBox.*;
+
 import java.text.SimpleDateFormat;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -16,6 +17,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collections;
 import java.util.Date;
+
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
@@ -46,7 +48,6 @@ public class AddTask extends JFrame implements ActionListener, DocumentListener 
 	private JScrollPane jScrollPane1;
 
 	private Date startDate, endDate;
-	private DbManager dbm = new DbManager();
 
 	private JComboBox dayCombo_StartDate, monthCombo_StartDate, dayCombo_EndDate, monthCombo_EndDate, importanceCombo, priorityCombo;
 	private String[] months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
@@ -274,7 +275,7 @@ public class AddTask extends JFrame implements ActionListener, DocumentListener 
 			else // errorString is empty. No errors and it's ok to proceed
 			{
 				// Save task into the database
-				dbm.createTask(1, name, description, priorityIndex, importanceIndex, stringifyDate(startDate), stringifyDate(endDate));
+				DbManager.getInstance().createTask(1, name, description, priorityIndex, importanceIndex, stringifyDate(startDate), stringifyDate(endDate));
 
 				// alert user throughout the process
 				JOptionPane.showMessageDialog(null, "Task added successfully", "Task added", JOptionPane.DEFAULT_OPTION, checkMarkIMG);

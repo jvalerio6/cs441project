@@ -19,7 +19,7 @@ public class Gui extends JFrame implements ActionListener {
 	private static Gui instance = null;
 
 	final Random rand = new Random();
-	final static boolean coloredPanels = true;
+	final static boolean coloredPanels = false;
 
 	protected Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	protected int hight = screenSize.height / 3;
@@ -27,12 +27,13 @@ public class Gui extends JFrame implements ActionListener {
 
 	protected  DbManager db;
 
+	JPanel jpnlTasks;
 
 	/**
 	 * default constructor
 	 * initialises all gui components
 	 */
-	private Gui(){
+	private Gui() {
 		db = DbManager.getInstance();
 		passwordFrame();
 		createGUI();
@@ -53,7 +54,7 @@ public class Gui extends JFrame implements ActionListener {
     void createGUI() {
     	final JPanel panel = new JPanel(new GridBagLayout());
 		final JPanel jpnlView = viewPanel();
-		final JPanel jpnlTasks =new ViewTaskArea();
+		jpnlTasks = new ViewTaskArea();
 		final JPanel jpnlMenu = menuBar();
 
 		try {
@@ -154,38 +155,56 @@ public class Gui extends JFrame implements ActionListener {
 	private JPanel viewPanel() {
 		int hgap = 10;
 		int vgap = 10;
+
 		final JButton jbtnManager = new JButton();
-		final JLabel jlbl1 = new JLabel("Project");
-		final JLabel jlbl2 = new JLabel("Manager");
+		final JLabel jlbl1 = new JLabel("Project Manager");
 	    final JButton jbtnUser = new JButton();
-	    final JLabel jlbl3 = new JLabel("Personal");
-		final JLabel jlbl4 = new JLabel("  User");
+	    final JLabel jlbl3 = new JLabel("Personal User");
 	    final JButton jbtnCommunity = new JButton();
-	    final JLabel jlbl5 = new JLabel("Comunity");
-		final JLabel jlbl6 = new JLabel("  User");
+	    final JLabel jlbl5 = new JLabel("Community User");
 	    final JButton jbtnObservation = new JButton("Observer");
 
 	    jbtnManager.setLayout(new BorderLayout());
-	    jbtnManager.add(BorderLayout.NORTH,jlbl1);
-	    jbtnManager.add(BorderLayout.CENTER,jlbl2);
+	    jbtnManager.add(BorderLayout.CENTER,jlbl1);
 
 	    jbtnUser.setLayout(new BorderLayout());
-	    jbtnUser.add(BorderLayout.NORTH,jlbl3);
-	    jbtnUser.add(BorderLayout.CENTER,jlbl4);
+	    jbtnUser.add(BorderLayout.CENTER,jlbl3);
 
 	    jbtnCommunity.setLayout(new BorderLayout());
-	    jbtnCommunity.add(BorderLayout.NORTH,jlbl5);
-	    jbtnCommunity.add(BorderLayout.CENTER,jlbl6);
+	    jbtnCommunity.add(BorderLayout.CENTER,jlbl5);
 
-	    Dimension d = new Dimension(135,50);
+	    Dimension d = new Dimension(135,15);
 	    jbtnManager.setPreferredSize(d);
 	    jbtnUser.setPreferredSize(d);
 	    jbtnCommunity.setPreferredSize(d);
 	    jbtnObservation.setPreferredSize(d);
 
+	    // Adding JOptionPane messages when each of the modes are clicked
+	    jbtnManager.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	JOptionPane.showMessageDialog(null, "You are in Project Manager mode now.", "Mode", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+
+	    jbtnUser.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	JOptionPane.showMessageDialog(null, "You are in User mode now.", "Mode", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+
+	    jbtnCommunity.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	JOptionPane.showMessageDialog(null, "You are in Community mode now.", "Mode", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+
+	    jbtnObservation.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	JOptionPane.showMessageDialog(null, "You are in Observation mode now.", "Mode", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
 
 	    JPanel panel = new JPanel(new GridLayout(0, 1, hgap, vgap));
-
 	    panel.add(jbtnManager);
 	    panel.add(jbtnUser);
 	    panel.add(jbtnCommunity);
@@ -200,31 +219,52 @@ public class Gui extends JFrame implements ActionListener {
 
 	private JPanel menuBar() {
 
-		final JButton jbtnNewTask = new JButton(" New Task ");
-	    final JButton jbtnLogin = new JButton(" logout ");
-	    final JButton jbtnSearch = new JButton(" Search ");
+		ImageIcon SEARCH_ICO = new ImageIcon(this.getClass().getResource("/img/search-32.png"));
+		ImageIcon PENCIL_ICO = new ImageIcon(this.getClass().getResource("/img/pencil-32.png"));
+		ImageIcon LOGOUT_ICO = new ImageIcon(this.getClass().getResource("/img/logout-32.png"));
+		ImageIcon REFRESH_ICO = new ImageIcon(this.getClass().getResource("/img/refresh-32.png"));
+
+		final JButton jbtnNewTask = new JButton("New Task");
+		jbtnNewTask.setIcon(PENCIL_ICO);
+
+	    final JButton jbtnLogin = new JButton("Log Out");
+	    jbtnLogin.setIcon(LOGOUT_ICO);
+
+	    final JButton jbtnSearch = new JButton("Search");
+	    jbtnSearch.setIcon(SEARCH_ICO);
+
+	    final JButton jbtnRefresh = new JButton("Refresh");
+	    jbtnRefresh.setIcon(REFRESH_ICO);
+
 	    final JPanel panel = new JPanel(new GridBagLayout());
 
-	    jbtnNewTask.setPreferredSize(new Dimension(100,40));
-	    jbtnLogin.setPreferredSize(new Dimension(80, 40));
-	    jbtnSearch.setPreferredSize(new Dimension(80, 40));
+	    jbtnNewTask.setPreferredSize(new Dimension(120,40));
+	    jbtnLogin.setPreferredSize(new Dimension(120, 40));
+	    jbtnSearch.setPreferredSize(new Dimension(120, 40));
+	    jbtnRefresh.setPreferredSize(new Dimension(120, 40));
 
 	    GridBagConstraints c = new GridBagConstraints();
 	    c.gridx = 0;
 	    c.gridy = 0;
-	    c.ipadx = 100;
+	    c.ipadx = 25;
 	    c.anchor = GridBagConstraints.WEST;
 	    panel.add(jbtnLogin, c);
 
 	    c.gridx = 1;
 	    c.ipadx = 25;
-	    c.anchor = GridBagConstraints.EAST;
+	    c.anchor = GridBagConstraints.WEST;
 	    panel.add(jbtnNewTask, c);
 
 	    c.gridx = 2;
 	    c.ipadx = 25;
-	    c.anchor = GridBagConstraints.EAST;
+	    c.anchor = GridBagConstraints.WEST;
 	    panel.add(jbtnSearch, c);
+
+	    c.gridx = 5;
+	    c.ipadx = 25;
+	    c.anchor = GridBagConstraints.WEST;
+	    panel.add(jbtnRefresh, c);
+
 
 		if (coloredPanels){
 			panel.setBackground(randColor());
@@ -255,6 +295,22 @@ public class Gui extends JFrame implements ActionListener {
             }
         });
 
+
+		jbtnRefresh.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+            	jpnlTasks.setVisible(false);
+
+            	((ViewTaskArea) jpnlTasks).removeAll();
+            	((ViewTaskArea) jpnlTasks).refreshTaskArea();
+
+            	JOptionPane.showMessageDialog(null, "Pane was updated!", "Refresh", JOptionPane.INFORMATION_MESSAGE);
+
+            	jpnlTasks.doLayout();
+
+            }
+        });
+
 	    return panel;
 	}
 
@@ -277,7 +333,6 @@ public class Gui extends JFrame implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
 
 	}
 }
