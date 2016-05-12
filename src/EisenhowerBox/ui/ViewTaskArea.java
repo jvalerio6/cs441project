@@ -9,6 +9,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -51,7 +52,7 @@ public class ViewTaskArea extends JPanel{
 	protected final JScrollPane jscpn4 = new JScrollPane();
 	List<Task> allTasks = DbManager.getInstance().getTaskList();
 
-	User user = null;
+	static User user = null;
 
 	protected final Dimension panel_dimension = new Dimension(1000,480);
 
@@ -262,50 +263,10 @@ public class ViewTaskArea extends JPanel{
 		return resultingList;
 	}
 
-//	private void setDefaultTextArea( JTextPane textArea){
-//		textArea.setEditable(false);
-//
-//		StyleContext sc = new StyleContext();
-//		final DefaultStyledDocument doc = new DefaultStyledDocument(sc);
-//		textArea.setStyledDocument(doc);
-//
-//		final Style taskStyle = sc.addStyle("TaskStyle", null);
-//	    StyleConstants.setBold(taskStyle, true);
-//	    StyleConstants.setLeftIndent(taskStyle, 4);
-//	    StyleConstants.setRightIndent(taskStyle, 4);
-//	    StyleConstants.setFirstLineIndent(taskStyle, 8);
-//	    StyleConstants.setFontFamily(taskStyle, "serif");
-//	    StyleConstants.setFontSize(taskStyle, 16);
-//	    StyleConstants.setForeground(taskStyle, Color.darkGray);
-//
-//		final Style heading2Style = sc.addStyle("Heading2", null);
-//	    heading2Style.addAttribute(StyleConstants.Foreground, Color.red);
-//	    heading2Style.addAttribute(StyleConstants.FontSize, new Integer(16));
-//	    heading2Style.addAttribute(StyleConstants.FontFamily, "serif");
-//	    heading2Style.addAttribute(StyleConstants.Bold, new Boolean(true));
-//
-//	    try {
-//	        SwingUtilities.invokeAndWait(new Runnable() {
-//	          public void run() {
-//	            try {
-//
-//	              // Add the text to the document
-//	              doc.insertString(0, sampleTask, heading2Style);
-//	              doc.insertString(doc.getLength(), " \n\n\n\n\n\nllll\n", null);
-//	              doc.insertString(doc.getLength(), sampleTask, taskStyle);
-//	              doc.insertString(doc.getLength(), " \n\n\n\n\n\nllll\n", null);
-//
-//	              // Finally, apply the style to the heading
-//	              //doc.setParagraphAttributes(0, 1, heading2Style, false);
-//	            } catch (BadLocationException e) {
-//	            }
-//	          }
-//	        });
-//	      } catch (Exception e) {
-//	        System.out.println("Exception when constructing document: " + e);
-//	        System.exit(1);
-//	      }
-//
-//	}
+	public static void setUser(User user2) {
+		user = user2;
+		
+	}
+
 }
 

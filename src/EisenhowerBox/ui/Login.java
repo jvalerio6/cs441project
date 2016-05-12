@@ -1,18 +1,24 @@
 package EisenhowerBox.ui;
 
-import java.awt.GridLayout;
-import java.awt.BorderLayout;
-import java.awt.Color;
+
+import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
+import java.util.Arrays;
+
 import javax.swing.*;
-import EisenhowerBox.*;
+
+import EisenhowerBox.DbManager;
 
 
-class Login extends JDialog implements ActionListener {
 
+class Login extends JPanel implements ActionListener {
+
+    /**
+	 * 
+	 */
+	
 	private static final long serialVersionUID = 21L;
-
+	
 	private final JLabel jlblUsername = new JLabel("Username");
     private final JLabel jlblPassword = new JLabel("Password");
 
@@ -23,20 +29,13 @@ class Login extends JDialog implements ActionListener {
     private final JButton jbtCancel = new JButton("Cancel");
 
     private final JLabel jlblStatus = new JLabel(" ");
-
-    private DbManager dbm = new DbManager();
-    List<TeamMember> memberList = dbm.getTeamMemberList();
-    List<ProjectManager> managerList = dbm.getProjectManagerList();
-
-
+    
+    
+    
+    
+    
     public Login() {
-
-        this(null, true);
-    }
-
-
-    public Login(final JFrame parent, boolean modal) {
-        super(parent, "User Login", modal);
+        //super(parent, "User Login", modal);
 
         JPanel p3 = new JPanel(new GridLayout(2, 1));
         p3.add(jlblUsername);
@@ -46,7 +45,7 @@ class Login extends JDialog implements ActionListener {
         p4.add(jtfUsername);
         p4.add(jpfPassword);
 
-        JPanel p1 = new JPanel();
+        JPanel p1 = new JPanel(new GridLayout(1, 2));
         p1.add(p3);
         p1.add(p4);
 
@@ -60,72 +59,65 @@ class Login extends JDialog implements ActionListener {
         jlblStatus.setForeground(Color.RED);
         jlblStatus.setHorizontalAlignment(SwingConstants.CENTER);
 
-        setLayout(new BorderLayout());
-        add(p1, BorderLayout.CENTER);
-        add(p5, BorderLayout.SOUTH);
-        pack();
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        this.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+        c.weightx = 0.0;   						//request any extra Horizontal space
+		c.weighty = 0.25; 
+		c.anchor = GridBagConstraints.SOUTH;
+		c.insets = new Insets(15,15,15,15);
+		c.ipadx = 10;
+		c.ipady = 30;
+		c.gridx = 0;
+		c.fill =  GridBagConstraints.NONE;
+		c.gridy = 1;
+		c.gridwidth = 1;  
+        this.add(p1, c);
+        
+        c.weightx = 0.25;   						//request any extra Horizontal space
+		c.weighty = 0.1; 
+		c.anchor = GridBagConstraints.CENTER;
+		c.insets = new Insets(15,15,15,15);
+		c.ipadx = 20;
+		c.ipady = 70;
+		c.gridx = 0;
+		c.fill =  GridBagConstraints.NONE;
+		c.gridy = 2;
+		c.gridwidth = 1;
+        this.add(p5, c);
+        //pack();
+        //setLocationRelativeTo(null);
+        //setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
-            }
-        });
 
 
         jbtOk.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-//              if (Arrays.equals("password".toCharArray(), jpfPassword.getPassword())
-//                        && "username".equals(jtfUsername.getText())) {
-//                    parent.setVisible(true);
-//                    setVisible(false);
-
-            	String password = String.valueOf(jpfPassword.getPassword());
-
-            	if ( isExistingUser(jtfUsername.getText(), password) ) {
-            		parent.setVisible(true);
-            	  	setVisible(false);
+                if (Arrays.equals("password".toCharArray(), jpfPassword.getPassword())
+                        && "username".equals(jtfUsername.getText())) {
+                    Gui.getInstance().loadTasks(
+                    		DbManager.getInstance().getUser(
+                    				jtfUsername.getText())
+                    		);
+                    setVisible(false);
                 } else {
                     jlblStatus.setText("Invalid username or password");
                 }
             }
         });
-
+        
         jbtCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
-                parent.dispose();
+                ((Window) getParent()).dispose();
                 System.exit(0);
             }
         });
     }
 
+
+	@Override
 	public void actionPerformed(ActionEvent arg0) {
-
-	}
-
-	public boolean isExistingUser(String username, String password) {
-		boolean isExisting = false;
-
-		for (ProjectManager pm : managerList) {
-			if (pm.getName().equals(username) && pm.getPassword().equals(password)) {
-				isExisting = true;
-				break;
-			}
-		}
-
-		if (!isExisting) {
-			for (TeamMember tm : memberList) {
-				if (tm.getName().equals(username) && tm.getPassword().equals(password)) {
-					isExisting = true;
-					break;
-				}
-			}
-		}
-
-		System.out.println("isExisting " + isExisting);
-
-		return isExisting;
+		// TODO Auto-generated method stub
+		
 	}
 }

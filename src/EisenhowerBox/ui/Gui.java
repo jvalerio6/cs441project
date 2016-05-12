@@ -11,6 +11,9 @@ import java.util.Random;
 import javax.swing.*;
 
 import EisenhowerBox.DbManager;
+import EisenhowerBox.TeamMember;
+
+import EisenhowerBox.User;
 
 public class Gui extends JFrame implements ActionListener {
 
@@ -24,8 +27,16 @@ public class Gui extends JFrame implements ActionListener {
 	protected Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	protected int hight = screenSize.height / 3;
 	protected int width = screenSize.width / 3;
-
+	
+	
+	protected JPanel viewPanel;
+	protected ViewNewUser startPanel;
+	protected ViewTaskArea viewTaskPanel;
+	protected final CardLayout cl = new CardLayout();
 	protected  DbManager db;
+	public User user;
+
+	
 
 	JPanel jpnlTasks;
 
@@ -34,8 +45,9 @@ public class Gui extends JFrame implements ActionListener {
 	 * initialises all gui components
 	 */
 	private Gui() {
+		super("Project Manager");
 		db = DbManager.getInstance();
-		passwordFrame();
+		//passwordFrame();
 		createGUI();
 	}
 
@@ -49,24 +61,31 @@ public class Gui extends JFrame implements ActionListener {
     	}
     	return instance;
     }
+    
+    public void loadTasks(User user) {
+		if (((TeamMember)user).getName() == null){
+			System.out.println("Cannot process null user:");
+		}
+		this.user = user;
+		cl.show(viewPanel, "task");
+		ViewTaskArea.setUser(user);		
+	}
 
 
     void createGUI() {
     	final JPanel panel = new JPanel(new GridBagLayout());
 		final JPanel jpnlView = viewPanel();
-		jpnlTasks = new ViewTaskArea();
 		final JPanel jpnlMenu = menuBar();
 
-		try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-        }
-		catch (Exception e) {
-			System.err.println("Error: " + e.getMessage());
-		}
-
+		viewPanel = new JPanel(cl);
+		startPanel = new ViewNewUser();
+		viewTaskPanel = new ViewTaskArea();
+		viewPanel.add(startPanel, "start");
+		viewPanel.add(viewTaskPanel, "task");
+		
 		GridBagConstraints c = new GridBagConstraints();
 
-		//Adds the menue to the top so it takes up the entire width
+			//Adds the menue to the top so it takes up the entire width
 		c.weightx = 1.0;   						//request any extra Horizontal space
 		c.anchor = GridBagConstraints.PAGE_START;
 		c.insets = new Insets(10,5,5,5);
@@ -78,7 +97,7 @@ public class Gui extends JFrame implements ActionListener {
 
 
 
-		// Adds the View Panel to the side and sizes it
+			// Adds the View Panel to the side and sizes it
 		c.weighty = 0.5;
 		c.weightx = 0.0;
 		c.anchor = GridBagConstraints.WEST;
@@ -90,7 +109,7 @@ public class Gui extends JFrame implements ActionListener {
 		panel.add(jpnlView, c);
 
 
-		// Adds the Task Panel to the right
+			// Adds the Task Panel to the right
 		c.weightx = 1.0;
 		c.weighty = 0.5;
 		c.gridx = 1;
@@ -98,55 +117,24 @@ public class Gui extends JFrame implements ActionListener {
 		c.anchor = GridBagConstraints.EAST;
 		c.insets = new Insets(0,5,5,5);
 		c.fill = GridBagConstraints.BOTH;
-		panel.add(jpnlTasks, c);
+		panel.add(viewPanel, c);
 
 		panel.setVisible(true);
 		if (coloredPanels) panel.setBackground(randColor());
 
         SwingUtilities.invokeLater(new Runnable() {
     		public void run(){
-    			JFrame frame = new JFrame("Project Managment");
-        	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        	    instance.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         	    JFrame.setDefaultLookAndFeelDecorated(true);
-        		frame.setLayout(new BorderLayout());
-        		if (coloredPanels) frame.setBackground(randColor());
-        	    frame.add(panel);
-                frame.pack();
-                frame.setVisible(true);
-                frame.setLocationRelativeTo(null);
-                frame.setPreferredSize(panel.getPreferredSize());
+        	    instance.setLayout(new BorderLayout());
+        		if (coloredPanels) instance.setBackground(randColor());
+        		instance.add(panel);
+        		instance.pack();
+        		instance.setVisible(true);
+        		instance.setPreferredSize(panel.getPreferredSize());
     		}
     	});
 	}
-
-	/**
-	 * Initial Lodin frame
-	 */
-	private void passwordFrame() {
-    	final Login login = new Login(this, true);
-    	login.setVisible(true);
-
-
-        /**
-         * Method to invoke the thread whenever it is convinient
-         * @Override: overrides the frame attributes of the parent class for the login window
-         */
-        SwingUtilities.invokeLater(new Runnable() {
-            	// creates a new thread to run the login frame
-            public void run() {
-                JFrame frame = new JFrame();
-                //frame.setMinimumSize(new Dimension(500, 200));
-                //frame.add(login);
-                frame.getContentPane().setBackground(Color.BLACK);
-                frame.setTitle("Logged In");
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setLocationRelativeTo(null);
-                frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-                frame.setPreferredSize(new Dimension(hight, width));
-            }
-        });
-
-    }
 
 	/**
 	 * Sets up user view menue
@@ -334,5 +322,10 @@ public class Gui extends JFrame implements ActionListener {
 
 	public void actionPerformed(ActionEvent arg0) {
 
+	}
+
+	public void refresh() {
+		// TODO Auto-generated method stub
+		
 	}
 }
